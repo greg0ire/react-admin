@@ -22,17 +22,32 @@ var gulp    = require('gulp')
   , csso = require('gulp-csso')
   , autoprefixer = require('gulp-autoprefixer')
   , notify = require('gulp-notify')
+  , debug = require('gulp-debug')
 
   , source = require('vinyl-source-stream')
   , buffer = require('vinyl-buffer')
   , transform = require('vinyl-transform')
+  , runSequence = require('run-sequence')
+  , sleep = require('sleep');
   ;
 
-gulp.task('build.clean', function(cb){
+
+gulp.task('default', function(cb) {
+  return runSequence('lib', 'npm', 'demo', cb)
+});
+
+/**
+ * Tasks for building the main library
+ **/
+gulp.task('lib.clean', function(cb){
     return del('./lib', cb);
 })
 
-gulp.task('build.compile', [ 'build.clean' ], function(){
+gulp.task('lib.transpile.clean', function(cb){
+    return del('./lib/*/*.js', cb);
+})
+
+gulp.task('lib.transpile', [ 'lib.transpile.clean' ], function(){
     return gulp.src(['./src/**/*.js', './src/**/*.jsx'])
         .pipe(plumber())
         .pipe(toFive({}))
@@ -41,15 +56,44 @@ gulp.task('build.compile', [ 'build.clean' ], function(){
         .pipe(gulp.dest('./lib'));
 })
 
-gulp.task('build', ['build.compile'], function() {
+gulp.task('lib.theme.clean', function(cb){
+    return del('./lib/themes/*', cb);
+})
+gulp.task('lib.theme', [ 'lib.theme.clean' ], function(){
+    return gulp.src('./src/themes/**/*.scss')
+        .pipe(gulp.dest('./lib/themes'));
+})
+
+gulp.task('lib', ['lib.transpile', 'lib.theme'], function(cb) {
     return del([
         "./lib/__tests__",
         "./lib/*/__tests__",
         "./lib/__mocks__",
         "./lib/*/__mocks__"
-    ])
+    ], cb)
 })
 
+/**
+ * Tasks for making the react-admin module available in the current scope
+ **/
+gulp.task('npm.clean', function(cb) {
+  return del("./node_module/react-admin", cb)
+});
+
+gulp.task('npm.prepare', ['npm.clean'], function() {
+  return gulp.src(['./package.json', './lib/**/*'], { base: './' })
+      .pipe(gulp.dest('./node_modules/react-admin'));
+});
+
+gulp.task('npm', ['npm.prepare'], function () {
+  return gulp.src(['./node_modules/superagent/**/*'], { base: './' })
+      .pipe(gulp.dest('./node_modules/react-admin/node_modules'));
+
+});
+
+/**
+ * Tasks for building the current demo
+ **/
 gulp.task('demo.fonts', ['demo.clean.fonts'], function() { 
     return gulp.src([
             './bower_components/bootstrap-sass/assets/fonts/bootstrap/**.*',
@@ -93,7 +137,7 @@ gulp.task('demo.clean', ['demo.clean.js', 'demo.clean.fonts', 'demo.clean.css'],
     return del('./demo/dist', cb);
 });
 
-gulp.task('demo.js', /*['build', 'demo.clean.js'],*/ function(cb) {
+gulp.task('demo.js', ['demo.clean.js'], function(cb) {
     return browserify("./demo/src/app.jsx", {
           basedir: __dirname,
           debug: true,
@@ -106,8 +150,7 @@ gulp.task('demo.js', /*['build', 'demo.clean.js'],*/ function(cb) {
         .pipe(buffer())
         //.pipe(uglify())
         .pipe(gulp.dest("demo/dist/js"));
-    }
-)
+})
 
 gulp.task('demo', [
     'demo.html',

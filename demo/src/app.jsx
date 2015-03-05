@@ -101,7 +101,6 @@ var DebugRouter = React.createClass({
       <p>
         {message}
       </p>
-
     </div>
   }
 });
