@@ -93,11 +93,12 @@ gulp.task('demo.clean', ['demo.clean.js', 'demo.clean.fonts', 'demo.clean.css'],
     return del('./demo/dist', cb);
 });
 
-gulp.task('demo.js', ['build', 'demo.clean.js'], function(cb) {
+gulp.task('demo.js', /*['build', 'demo.clean.js'],*/ function(cb) {
     return browserify("./demo/src/app.jsx", {
           basedir: __dirname,
           debug: true,
-          paths: ['./node_modules', './demo/src']
+          paths: ['./node_modules', './demo/src'],
+          fullPaths: false
         })
         .transform(reactify)
         .bundle()

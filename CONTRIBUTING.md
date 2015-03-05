@@ -1,5 +1,15 @@
 # Contributing to React Admin
 
+### Running the demo
+
+You can checkout and run the demo with:
+
+    git clone git@github.com:rande/react-admin.git
+    make demo
+    http-server demo/dist
+
+Once you want to test your change just rerun the ``make demo`` command. If you only change some assets from the demo, you can run the gulp command : ``gulp demo`` to only update the demo.
+
 ### `master` is unsafe
 
 We will do our best to keep `master` in good shape, with tests passing at all times. But in order to move fast, we will make API changes that your application might not be compatible with. We will do our best to communicate these changes and always version appropriately so you can lock into a specific version if need be.
