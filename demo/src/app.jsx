@@ -54,7 +54,7 @@ var App = React.createClass({
 
     return (
       <div>
-        <B.Navbar inverse={true} fixedTop={true} fluid={true} brand="React Admin">
+        <B.Navbar inverse={true} fixedTop={true} fluid={true} brand="React Admin Demo">
             <B.Nav activeKey={1} right={true} navbar={true}>
               <RB.NavItemLink to="homepage">Dashboard</RB.NavItemLink>
               <RB.NavItemLink to="app1">Demo</RB.NavItemLink>
@@ -118,6 +118,22 @@ var routes = (
 
   </Router.Route>
 );
+
+var NotificationElement = require('component/NotificationElement.jsx');
+
+// add fake notification
+ReactAdmin.Notification.Action(NotificationElement, {
+  name: "The first notification",
+  action: "create",
+  icon: 'fa-futbol-o fa-spin'
+});
+
+ReactAdmin.Notification.Action(NotificationElement, {
+  name: "The second notification",
+  action: "update",
+  icon: 'fa-coffee'
+});
+
 
 /**
  * Start the application, the app id is set in the index.html page
