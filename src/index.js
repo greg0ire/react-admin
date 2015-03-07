@@ -42,6 +42,13 @@ module.exports = {
 
   EndPoint: require("./rest/EndPoint"),
 
+  Card: {
+      Icon: require("./card/Icon.jsx"),
+      Information: require("./card/Information.jsx"),
+      Notification: require("./card/Notification.jsx"),
+      List: require("./card/List.jsx")
+  },
+
   // Status
   Status: {
       Action: require("./store/Status.jsx").Action,

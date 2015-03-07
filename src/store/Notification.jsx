@@ -5,8 +5,7 @@ var B = require('react-bootstrap');
 var Reflux = require('reflux');
 var _ = require('lodash');
 
-
-var action = Reflux.createAction()
+var action = Reflux.createAction();
 
 var store = Reflux.createStore({
     init: function() {

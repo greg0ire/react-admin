@@ -3,7 +3,14 @@
 var React = require('react');
 var B = require('react-bootstrap');
 var Router = require('react-router');
-var RB = require('react-router-bootstrap')
+var RB = require('react-router-bootstrap');
+
+var Card = {
+  List: require('../card/List'),
+  Icon: require('../card/Icon'),
+  Information: require('../card/Information'),
+  Notification: require('../card/Notification')
+}
 
 var _ = require('lodash');
 var Url = require('url');
@@ -59,6 +66,23 @@ var BaseTable = {
     if (page < 1) page = 1;
 
     return page;
+  },
+
+  renderRow: function(element) {
+     // this method should be overwritten to create your own rendering element
+    return <Card.List>
+        <Card.Information >
+            The information card
+        </Card.Information>
+
+        <Card.Icon type="circle-thin" />
+
+        A message you can use
+
+        <Card.Notification>
+          The notification card
+        </Card.Notification>
+      </Card.List>
   },
 
   render: function() {

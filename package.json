@@ -73,7 +73,9 @@
     "reactify": "~1.0.0",
     "faker": "~2.1.2",
     "run-sequence": "~1.0.2",
-    "gulp-debug": "~2.0.1"
+    "gulp-debug": "~2.0.1",
+    "gulp-watch-sequence": "0.0.4",
+    "gulp-watch": "~4.1.1"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/6to5-jest",
