@@ -28,8 +28,7 @@ var gulp    = require('gulp')
   , buffer = require('vinyl-buffer')
   , transform = require('vinyl-transform')
   , runSequence = require('run-sequence')
-  , sleep = require('sleep');
-  ;
+;
 
 
 gulp.task('default', function(cb) {
