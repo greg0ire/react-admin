@@ -14,12 +14,11 @@
   "files": [
     "README.md",
     "dist/",
-    "lib/",
     "index.js",
     "LICENSE",
     "CONTRIBUTING.md"
   ],
-  "main": "lib/index.js",
+  "main": "dist/react-admin/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/rande/react-admin"
@@ -75,7 +74,9 @@
     "run-sequence": "~1.0.2",
     "gulp-debug": "~2.0.1",
     "gulp-watch-sequence": "0.0.4",
-    "gulp-watch": "~4.1.1"
+    "gulp-watch": "~4.1.1",
+    "gulp-styledocco": "0.0.3",
+    "gulp-marked": "~1.0.0"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/6to5-jest",
@@ -93,7 +94,7 @@
       "./node_modules/react-bootstrap"
     ],
     "testPathDirs": [
-      "./src"
+      "./react-admin"
     ]
   },
   "scripts": {

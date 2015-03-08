@@ -1,0 +1,45 @@
+.card {
+  background-color: #f4ed7c;
+
+  @include border-radius(0px 0px 2px 1px rgba(0,0,0,0.45));
+
+  padding: 5px;
+  margin: 5px;
+  min-height: 70px;
+  max-height: 70px;
+
+  &__icon {
+    min-height: 70px;
+    max-height: 70px;
+    float: left;
+    margin-right: 5px;
+  }
+
+  &__notification {
+    float: right !important;
+    position: absolute;
+    top: 7px;
+    right: 24px;
+  }
+
+  &__information {
+    position: absolute;
+    bottom: 5px;
+    right: 23px;
+    font-size: 10px;
+    font-style: italic;
+  }
+}
+
+
+.card-user {
+  background-color: #e5dbcc;
+}
+
+.card-media {
+  background-color: #ffffff;
+}
+
+.card-post {
+  background-color: #5e68c4;
+}

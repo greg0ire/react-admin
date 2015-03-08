@@ -1,4 +1,5 @@
 'use strict';
+
 var gulp    = require('gulp')
   , del     = require('del')
   , browserify = require('browserify')
@@ -23,52 +24,56 @@ var gulp    = require('gulp')
   , autoprefixer = require('gulp-autoprefixer')
   , notify = require('gulp-notify')
   , debug = require('gulp-debug')
+  , watch = require('gulp-watch')
+  , sequence = require('gulp-watch-sequence')
 
   , source = require('vinyl-source-stream')
   , buffer = require('vinyl-buffer')
   , transform = require('vinyl-transform')
   , runSequence = require('run-sequence')
+  , styledocco = require('gulp-styledocco')
+  , marked = require('gulp-marked')
 ;
 
-
 gulp.task('default', function(cb) {
-  return runSequence('lib', 'npm', 'demo', cb)
+  return runSequence('lib', 'npm', 'demo', 'doc', cb)
 });
 
 /**
  * Tasks for building the main library
  **/
 gulp.task('lib.clean', function(cb){
-    return del('./lib', cb);
+    return del('./dist/react-admin', cb);
 })
 
 gulp.task('lib.transpile.clean', function(cb){
-    return del('./lib/*/*.js', cb);
+    return del('./dist/react-admin/*/*.js', cb);
 })
 
 gulp.task('lib.transpile', [ 'lib.transpile.clean' ], function(){
-    return gulp.src(['./src/**/*.js', './src/**/*.jsx'])
+    return gulp.src(['./react-admin/**/*.js', './react-admin/**/*.jsx'])
         .pipe(plumber())
         .pipe(toFive({}))
         .pipe(replace({regex: "\\.jsx", replace: ''}))
         .pipe(rename({ extname: '.js' }))
-        .pipe(gulp.dest('./lib'));
+        .pipe(gulp.dest('./dist/react-admin'));
 })
 
 gulp.task('lib.theme.clean', function(cb){
-    return del('./lib/themes/*', cb);
+    return del('./dist/react-admin/themes/*', cb);
 })
+
 gulp.task('lib.theme', [ 'lib.theme.clean' ], function(){
-    return gulp.src('./src/themes/**/*.scss')
-        .pipe(gulp.dest('./lib/themes'));
+    return gulp.src('./themes/**/*.scss')
+        .pipe(gulp.dest('./dist/react-admin/themes'));
 })
 
 gulp.task('lib', ['lib.transpile', 'lib.theme'], function(cb) {
     return del([
-        "./lib/__tests__",
-        "./lib/*/__tests__",
-        "./lib/__mocks__",
-        "./lib/*/__mocks__"
+        "./dist/react-admin/__tests__",
+        "./dist/react-admin/*/__tests__",
+        "./dist/react-admin/__mocks__",
+        "./dist/react-admin/*/__mocks__"
     ], cb)
 })
 
@@ -80,14 +85,13 @@ gulp.task('npm.clean', function(cb) {
 });
 
 gulp.task('npm.prepare', ['npm.clean'], function() {
-  return gulp.src(['./package.json', './lib/**/*'], { base: './' })
+  return gulp.src(['./package.json', './dist/react-admin/**/*'], { base: './' })
       .pipe(gulp.dest('./node_modules/react-admin'));
 });
 
 gulp.task('npm', ['npm.prepare'], function () {
   return gulp.src(['./node_modules/superagent/**/*'], { base: './' })
       .pipe(gulp.dest('./node_modules/react-admin/node_modules'));
-
 });
 
 /**
@@ -113,7 +117,7 @@ gulp.task('demo.styles', ['demo.clean.styles'], function() {
 });
 
 gulp.task('demo.html', ['demo.clean.html'], function() {
-  return gulp.src('demo/src/index.html').pipe(gulp.dest('demo/dist'));
+  return gulp.src('./demo/src/index.html').pipe(gulp.dest('demo/dist'));
 });
 
 gulp.task('demo.clean.html', function(cb) {
@@ -148,7 +152,7 @@ gulp.task('demo.js', ['demo.clean.js'], function(cb) {
         .pipe(source('app.js'))
         .pipe(buffer())
         //.pipe(uglify())
-        .pipe(gulp.dest("demo/dist/js"));
+        .pipe(gulp.dest("./demo/dist/js"));
 })
 
 gulp.task('demo', [
@@ -170,4 +174,40 @@ gulp.task('demo.server', function() {
       host: "0.0.0.0",
       port: 9999
     }));
+});
+
+gulp.task('doc.styles.clean', function(cb) {
+  return del('./dist/docs/themes/**/*.html', cb);
+});
+
+gulp.task('doc.styles', function () {
+  return gulp.src('./themes/**/*.scss')
+    .pipe(styledocco({
+      out: './dist/docs/themes',
+      name: 'React Admin Documentation',
+      'no-minify': true
+    }));
+});
+
+gulp.task('doc.html.clean', function(cb) {
+  return del('./dist/docs/react-admin/**/*.html', cb);
+});
+
+gulp.task('doc.html', ['doc.html.clean'], function() {
+  return gulp.src('./docs/**/*.md')
+    .pipe(marked({
+        // optional : marked options
+    }))
+    .pipe(gulp.dest('./dist/docs/react-admin'))
+});
+
+gulp.task('doc', ['doc.html', 'doc.styles']);
+
+gulp.task('watch', function () {
+  var watcher = gulp.watch("./react-admin/*/*.jsx", ['default']);
+  watcher.on('change', function(event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+  });
+
+  return watcher;
 });
