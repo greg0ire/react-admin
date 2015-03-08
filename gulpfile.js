@@ -63,9 +63,15 @@ gulp.task('lib.theme.clean', function(cb){
     return del('./dist/react-admin/themes/*', cb);
 })
 
-gulp.task('lib.theme', [ 'lib.theme.clean' ], function(){
+gulp.task('lib.theme.prepare', [ 'lib.theme.clean' ], function(){
     return gulp.src('./themes/**/*.scss')
         .pipe(gulp.dest('./dist/react-admin/themes'));
+})
+
+gulp.task('lib.theme', ['lib.theme.prepare'], function () {
+    return gulp.src('./dist/react-admin/themes/**/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('./dist/react-admin/themes/css'));
 })
 
 gulp.task('lib', ['lib.transpile', 'lib.theme'], function(cb) {
@@ -180,8 +186,8 @@ gulp.task('doc.styles.clean', function(cb) {
   return del('./dist/docs/themes/**/*.html', cb);
 });
 
-gulp.task('doc.styles', function () {
-  return gulp.src('./themes/**/*.scss')
+gulp.task('doc.styles', ['lib.theme'], function () {
+  return gulp.src('./dist/react-admin/themes/css/**/*.css')
     .pipe(styledocco({
       out: './dist/docs/themes',
       name: 'React Admin Documentation',

@@ -2,14 +2,14 @@
 
 var React = require('react');
 
-var Information = React.createClass({
+var Content = React.createClass({
   render: function() {
     return (
-      <div className="card__information">
+      <div className="card__content">
         {this.props.children}
       </div>
     )
   }
 });
 
-module.exports = Information;
+module.exports = Content;

@@ -23,7 +23,8 @@ var List = ReactAdmin.createTable({
       name: faker.name.findName(),
       avatar: faker.internet.avatar(),
       bio: faker.hacker.phrase(),
-      account: faker.finance.account()
+      account: faker.finance.account(),
+      count: faker.random.number()
     }
   },
 
@@ -36,22 +37,34 @@ var List = ReactAdmin.createTable({
       base_query: {},
       elements: Array.apply(null, {length: 32}).map(Function.call, this.generateData)
     });
-  }
-  ,  renderRow: function(data)
+  },
+
+  renderRow: function(data)
   {
     // this method should be overwritten to create your own rendering element
     return <ReactAdmin.Card.List>
-      <ReactAdmin.Card.Information >
+      <ReactAdmin.Card.Icon type="circle-thin" />
+
+      <ReactAdmin.Card.Notification>
+        <B.Label bsStyle="warning">{data.count}</B.Label>
+      </ReactAdmin.Card.Notification>
+
+      <ReactAdmin.Card.Title>
+        {data.name}
+      </ReactAdmin.Card.Title>
+
+      <ReactAdmin.Card.Content>
+        {data.bio}
+      </ReactAdmin.Card.Content>
+
+      <ReactAdmin.Card.Information>
       {data.account}
       </ReactAdmin.Card.Information>
 
-      <ReactAdmin.Card.Icon type="circle-thin" />
+      <ReactAdmin.Card.Actions>
+        <a href="" >edit</a>
+      </ReactAdmin.Card.Actions>
 
-    {data.bio}
-
-      <ReactAdmin.Card.Notification>
-      {data.name}
-      </ReactAdmin.Card.Notification>
     </ReactAdmin.Card.List>
   }
 });

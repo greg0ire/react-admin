@@ -23,7 +23,7 @@ var Icon = React.createClass({
     var className = "fa fa-"+ this.props.type + " fa-5x";
 
     return (
-      <div className="card-icon"><i className={className}></i></div>
+      <div className="card__icon"><i className={className}></i></div>
     )
   }
 });

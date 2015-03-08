@@ -46,7 +46,10 @@ module.exports = {
       Icon: require("./card/Icon.jsx"),
       Information: require("./card/Information.jsx"),
       Notification: require("./card/Notification.jsx"),
-      List: require("./card/List.jsx")
+      List: require("./card/List.jsx"),
+      Actions: require("./card/Actions.jsx"),
+      Content: require("./card/Content.jsx"),
+      Title: require("./card/Title.jsx")
   },
 
   // Status

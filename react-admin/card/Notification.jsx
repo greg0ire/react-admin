@@ -5,7 +5,7 @@ var React = require('react');
 var Notification = React.createClass({
   render: function() {
     return (
-      <div className="card-notification">
+      <div className="card__notification">
         {this.props.children}
       </div>
     )
