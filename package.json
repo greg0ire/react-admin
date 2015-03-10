@@ -76,7 +76,9 @@
     "gulp-watch-sequence": "0.0.4",
     "gulp-watch": "~4.1.1",
     "gulp-styledocco": "0.0.3",
-    "gulp-marked": "~1.0.0"
+    "gulp-marked": "~1.0.0",
+    "gulp-babel": "~4.0.0",
+    "babelify": "~5.0.4"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/6to5-jest",

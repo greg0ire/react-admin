@@ -3,15 +3,15 @@
 var gulp    = require('gulp')
   , del     = require('del')
   , browserify = require('browserify')
-  , reactify = require('reactify')
   , webserver = require('gulp-webserver')
 
   , browserSync = require('browser-sync')
   , reload = browserSync.reload
 
+  , babelify = require("babelify")
   , less = require('gulp-less')
   , rename = require('gulp-rename')
-  , toFive  = require("gulp-6to5")
+  , babel  = require("gulp-babel")
   , plumber = require('gulp-plumber')
   , concat  = require('gulp-concat')
   , replace = require('gulp-regex-replace')
@@ -36,43 +36,43 @@ var gulp    = require('gulp')
 ;
 
 gulp.task('default', function(cb) {
-  return runSequence('lib', 'npm', 'demo', 'doc', cb)
+    return runSequence('lib', 'npm', 'demo', 'doc', cb);
 });
 
 /**
  * Tasks for building the main library
  **/
-gulp.task('lib.clean', function(cb){
+gulp.task('lib.clean', function(cb) {
     return del('./dist/react-admin', cb);
-})
+});
 
-gulp.task('lib.transpile.clean', function(cb){
+gulp.task('lib.transpile.clean', function(cb) {
     return del('./dist/react-admin/*/*.js', cb);
-})
+});
 
-gulp.task('lib.transpile', [ 'lib.transpile.clean' ], function(){
+gulp.task('lib.transpile', [ 'lib.transpile.clean' ], function() {
     return gulp.src(['./react-admin/**/*.js', './react-admin/**/*.jsx'])
         .pipe(plumber())
-        .pipe(toFive({}))
+        .pipe(babel({}))
         .pipe(replace({regex: "\\.jsx", replace: ''}))
         .pipe(rename({ extname: '.js' }))
         .pipe(gulp.dest('./dist/react-admin'));
-})
+});
 
 gulp.task('lib.theme.clean', function(cb){
     return del('./dist/react-admin/themes/*', cb);
-})
+});
 
-gulp.task('lib.theme.prepare', [ 'lib.theme.clean' ], function(){
+gulp.task('lib.theme.prepare', [ 'lib.theme.clean' ], function() {
     return gulp.src('./themes/**/*.scss')
         .pipe(gulp.dest('./dist/react-admin/themes'));
-})
+});
 
 gulp.task('lib.theme', ['lib.theme.prepare'], function () {
     return gulp.src('./dist/react-admin/themes/**/*.scss')
         .pipe(sass())
         .pipe(gulp.dest('./dist/react-admin/themes/css'));
-})
+});
 
 gulp.task('lib', ['lib.transpile', 'lib.theme'], function(cb) {
     return del([
@@ -80,24 +80,24 @@ gulp.task('lib', ['lib.transpile', 'lib.theme'], function(cb) {
         "./dist/react-admin/*/__tests__",
         "./dist/react-admin/__mocks__",
         "./dist/react-admin/*/__mocks__"
-    ], cb)
-})
+    ], cb);
+});
 
 /**
  * Tasks for making the react-admin module available in the current scope
  **/
 gulp.task('npm.clean', function(cb) {
-  return del("./node_module/react-admin", cb)
+    return del("./node_module/react-admin", cb)
 });
 
 gulp.task('npm.prepare', ['npm.clean'], function() {
-  return gulp.src(['./package.json', './dist/react-admin/**/*'], { base: './' })
-      .pipe(gulp.dest('./node_modules/react-admin'));
+    return gulp.src(['./package.json', './dist/react-admin/**/*'], { base: './' })
+        .pipe(gulp.dest('./node_modules/react-admin'));
 });
 
 gulp.task('npm', ['npm.prepare'], function () {
-  return gulp.src(['./node_modules/superagent/**/*'], { base: './' })
-      .pipe(gulp.dest('./node_modules/react-admin/node_modules'));
+    return gulp.src(['./node_modules/superagent/**/*'], { base: './' })
+        .pipe(gulp.dest('./node_modules/react-admin/node_modules'));
 });
 
 /**
@@ -105,42 +105,42 @@ gulp.task('npm', ['npm.prepare'], function () {
  **/
 gulp.task('demo.fonts', ['demo.clean.fonts'], function() { 
     return gulp.src([
-            './bower_components/bootstrap-sass/assets/fonts/bootstrap/**.*',
-            './bower_components/fontawesome/fonts/**.*'
-        ]) 
-        .pipe(gulp.dest('./demo/dist/fonts')); 
+        './bower_components/bootstrap-sass/assets/fonts/bootstrap/**.*',
+        './bower_components/fontawesome/fonts/**.*'
+    ]) 
+    .pipe(gulp.dest('./demo/dist/fonts')); 
 });
 
 gulp.task('demo.styles', ['demo.clean.styles'], function() {
-  return gulp.src("./demo/src/styles/main.scss")
-    .pipe(changed("main.css"))
-    .pipe(sass({errLogToConsole: true}))
-    .on('error', notify.onError())
-    .pipe(autoprefixer('last 1 version'))
-    //.pipe(csso())
-    .pipe(gulp.dest('./demo/dist/css'))
-    .pipe(reload({stream: true}));
+    return gulp.src("./demo/src/styles/main.scss")
+        .pipe(changed("main.css"))
+        .pipe(sass({errLogToConsole: true}))
+        .on('error', notify.onError())
+        .pipe(autoprefixer('last 1 version'))
+        //.pipe(csso())
+        .pipe(gulp.dest('./demo/dist/css'))
+        .pipe(reload({stream: true}));
 });
 
 gulp.task('demo.html', ['demo.clean.html'], function() {
-  return gulp.src('./demo/src/index.html').pipe(gulp.dest('demo/dist'));
+    return gulp.src('./demo/src/index.html').pipe(gulp.dest('demo/dist'));
 });
 
 gulp.task('demo.clean.html', function(cb) {
     return del('./demo/dist/index.html', cb);
-})
+});
 
 gulp.task('demo.clean.styles', function(cb) {
     return del('./demo/dist/css', cb);
-})
+});
 
 gulp.task('demo.clean.fonts', function(cb) {
     return del('./demo/dist/fonts', cb);
-})
+});
 
 gulp.task('demo.clean.js', function(cb) {
     return del('./demo/dist/js', cb);
-})
+});
 
 gulp.task('demo.clean', ['demo.clean.js', 'demo.clean.fonts', 'demo.clean.css'], function() {
     return del('./demo/dist', cb);
@@ -153,13 +153,14 @@ gulp.task('demo.js', ['demo.clean.js'], function(cb) {
           paths: ['./node_modules', './demo/src'],
           fullPaths: false
         })
-        .transform(reactify)
+        .transform(babelify)
         .bundle()
+        .on("error", function (err) { console.log("Error: " + err.message); })
         .pipe(source('app.js'))
         .pipe(buffer())
         //.pipe(uglify())
         .pipe(gulp.dest("./demo/dist/js"));
-})
+});
 
 gulp.task('demo', [
     'demo.html',
@@ -169,51 +170,51 @@ gulp.task('demo', [
 ]);
 
 gulp.task('demo.server', function() {
-  return gulp.src('./demo/dist')
-    .pipe(webserver({
-      livereload: true,
-      directoryListing: {
-        enable: true,
-        path: './demo/dist'
-      },
-      open: true,
-      host: "0.0.0.0",
-      port: 9999
-    }));
+    return gulp.src('./demo/dist')
+        .pipe(webserver({
+            livereload: true,
+            directoryListing: {
+                enable: true,
+                path: './demo/dist'
+            },
+            open: true,
+            host: "0.0.0.0",
+            port: 9999
+        }));
 });
 
 gulp.task('doc.styles.clean', function(cb) {
-  return del('./dist/docs/themes/**/*.html', cb);
+    return del('./dist/docs/themes/**/*.html', cb);
 });
 
 gulp.task('doc.styles', ['lib.theme'], function () {
-  return gulp.src('./dist/react-admin/themes/css/**/*.css')
-    .pipe(styledocco({
-      out: './dist/docs/themes',
-      name: 'React Admin Documentation',
-      'no-minify': true
-    }));
+    return gulp.src('./dist/react-admin/themes/css/**/*.css')
+        .pipe(styledocco({
+            out: './dist/docs/themes',
+            name: 'React Admin Documentation',
+            'no-minify': true
+        }));
 });
 
 gulp.task('doc.html.clean', function(cb) {
-  return del('./dist/docs/react-admin/**/*.html', cb);
+    return del('./dist/docs/react-admin/**/*.html', cb);
 });
 
 gulp.task('doc.html', ['doc.html.clean'], function() {
-  return gulp.src('./docs/**/*.md')
-    .pipe(marked({
-        // optional : marked options
-    }))
-    .pipe(gulp.dest('./dist/docs/react-admin'))
+    return gulp.src('./docs/**/*.md')
+        .pipe(marked({
+            // optional : marked options
+        }))
+        .pipe(gulp.dest('./dist/docs/react-admin'))
 });
 
 gulp.task('doc', ['doc.html', 'doc.styles']);
 
 gulp.task('watch', function () {
-  var watcher = gulp.watch("./react-admin/*/*.jsx", ['default']);
-  watcher.on('change', function(event) {
-    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  });
+    var watcher = gulp.watch("./react-admin/*/*.jsx", ['default']);
+    watcher.on('change', function(event) {
+        console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    });
 
-  return watcher;
+    return watcher;
 });
