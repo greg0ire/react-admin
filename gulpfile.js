@@ -1,39 +1,36 @@
 'use strict';
 
-var gulp    = require('gulp')
-  , del     = require('del')
-  , browserify = require('browserify')
-  , webserver = require('gulp-webserver')
+var gulp    = require('gulp');
+var del     = require('del');
+var browserify = require('browserify');
+var webserver = require('gulp-webserver');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
+var babelify = require("babelify");
+var less = require('gulp-less');
+var rename = require('gulp-rename');
+var babel  = require("gulp-babel");
+var plumber = require('gulp-plumber');
+var concat  = require('gulp-concat');
+var replace = require('gulp-regex-replace');
+var stripDebug = require('gulp-strip-debug');
+var sourcemaps = require('gulp-sourcemaps');
+var derequire = require('gulp-derequire');
+var changed = require('gulp-changed');
+var sass = require('gulp-sass');
+var csso = require('gulp-csso');
+var autoprefixer = require('gulp-autoprefixer');
+var notify = require('gulp-notify');
+var debug = require('gulp-debug');
+var watch = require('gulp-watch');
+var sequence = require('gulp-watch-sequence');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var transform = require('vinyl-transform');
+var runSequence = require('run-sequence');
+var styledocco = require('gulp-styledocco');
+var marked = require('gulp-marked');
 
-  , browserSync = require('browser-sync')
-  , reload = browserSync.reload
-
-  , babelify = require("babelify")
-  , less = require('gulp-less')
-  , rename = require('gulp-rename')
-  , babel  = require("gulp-babel")
-  , plumber = require('gulp-plumber')
-  , concat  = require('gulp-concat')
-  , replace = require('gulp-regex-replace')
-  , stripDebug = require('gulp-strip-debug')
-  , sourcemaps = require('gulp-sourcemaps')
-  , derequire = require('gulp-derequire')
-  , changed = require('gulp-changed')
-  , sass = require('gulp-sass')
-  , csso = require('gulp-csso')
-  , autoprefixer = require('gulp-autoprefixer')
-  , notify = require('gulp-notify')
-  , debug = require('gulp-debug')
-  , watch = require('gulp-watch')
-  , sequence = require('gulp-watch-sequence')
-
-  , source = require('vinyl-source-stream')
-  , buffer = require('vinyl-buffer')
-  , transform = require('vinyl-transform')
-  , runSequence = require('run-sequence')
-  , styledocco = require('gulp-styledocco')
-  , marked = require('gulp-marked')
-;
 
 gulp.task('default', function(cb) {
     return runSequence('lib', 'npm', 'demo', 'doc', cb);
@@ -108,49 +105,49 @@ gulp.task('demo.fonts', ['demo.clean.fonts'], function() { 
         './bower_components/bootstrap-sass/assets/fonts/bootstrap/**.*',
         './bower_components/fontawesome/fonts/**.*'
     ]) 
-    .pipe(gulp.dest('./demo/dist/fonts')); 
+    .pipe(gulp.dest('./dist/demo/fonts')); 
 });
 
 gulp.task('demo.styles', ['demo.clean.styles'], function() {
-    return gulp.src("./demo/src/styles/main.scss")
+    return gulp.src("./demo/styles/main.scss")
         .pipe(changed("main.css"))
         .pipe(sass({errLogToConsole: true}))
         .on('error', notify.onError())
         .pipe(autoprefixer('last 1 version'))
         //.pipe(csso())
-        .pipe(gulp.dest('./demo/dist/css'))
+        .pipe(gulp.dest('./dist/demo/css'))
         .pipe(reload({stream: true}));
 });
 
 gulp.task('demo.html', ['demo.clean.html'], function() {
-    return gulp.src('./demo/src/index.html').pipe(gulp.dest('demo/dist'));
+    return gulp.src('./demo/index.html').pipe(gulp.dest('./dist/demo'));
 });
 
 gulp.task('demo.clean.html', function(cb) {
-    return del('./demo/dist/index.html', cb);
+    return del('./dist/demo/index.html', cb);
 });
 
 gulp.task('demo.clean.styles', function(cb) {
-    return del('./demo/dist/css', cb);
+    return del('./dist/demo/css', cb);
 });
 
 gulp.task('demo.clean.fonts', function(cb) {
-    return del('./demo/dist/fonts', cb);
+    return del('./dist/demo/fonts', cb);
 });
 
 gulp.task('demo.clean.js', function(cb) {
-    return del('./demo/dist/js', cb);
+    return del('./dist/demo/js', cb);
 });
 
 gulp.task('demo.clean', ['demo.clean.js', 'demo.clean.fonts', 'demo.clean.css'], function() {
-    return del('./demo/dist', cb);
+    return del('./dist/demo', cb);
 });
 
 gulp.task('demo.js', ['demo.clean.js'], function(cb) {
-    return browserify("./demo/src/app.jsx", {
+    return browserify("./demo/app.jsx", {
           basedir: __dirname,
           debug: true,
-          paths: ['./node_modules', './demo/src'],
+          paths: ['./node_modules', './demo'],
           fullPaths: false
         })
         .transform(babelify)
@@ -159,7 +156,7 @@ gulp.task('demo.js', ['demo.clean.js'], function(cb) {
         .pipe(source('app.js'))
         .pipe(buffer())
         //.pipe(uglify())
-        .pipe(gulp.dest("./demo/dist/js"));
+        .pipe(gulp.dest("./dist/demo/js"));
 });
 
 gulp.task('demo', [
@@ -168,20 +165,6 @@ gulp.task('demo', [
     'demo.styles',
     'demo.fonts'
 ]);
-
-gulp.task('demo.server', function() {
-    return gulp.src('./demo/dist')
-        .pipe(webserver({
-            livereload: true,
-            directoryListing: {
-                enable: true,
-                path: './demo/dist'
-            },
-            open: true,
-            host: "0.0.0.0",
-            port: 9999
-        }));
-});
 
 gulp.task('doc.styles.clean', function(cb) {
     return del('./dist/docs/themes/**/*.html', cb);
