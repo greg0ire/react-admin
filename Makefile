@@ -3,6 +3,7 @@
 default: build
 
 test:
+	gulp
 	npm test
 
 install:
