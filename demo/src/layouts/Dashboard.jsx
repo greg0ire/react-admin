@@ -7,45 +7,71 @@ var ReactAdmin = require('react-admin');
 
 var NotificationElement = require('component/NotificationElement.jsx');
 
-var Dashboard = React.createClass({
-  addNotification: function() {
-    ReactAdmin.Notification.Action(NotificationElement, {
-      name: "the new notification",
-      action: "update"
-    });
-  },
-  render: function() {
-    return (
-      <div className="col-md-12">
-        <h2>Welcome!</h2>
-
-        <p>
-          This is an interactive demo of the <code>React Admin</code> project. You can click on the different elements
-          to see what there are up too. You also see the demo as a learning project to build your next application.
-        </p>
-
-        <h2>Features</h2>
-        <h3>Notification</h3>
-        <p>
-          The notification will render a new element on the left panel. To send a notification, just
-          send a component and its related props to <code>ReactAdmin.Notification.Action</code> action.
-        </p>
-        <ul>
-          <li><B.Button bsStyle="link" onClick={this.addNotification}>Add Notification</B.Button></li>
-        </ul>
-
-        <h3>Status</h3>
-        <p>
-          The status is a small visual element used to send confirmation or error notice to the user.
-        </p>
-        <ul>
-          <li><B.Button bsStyle="link" onClick={ReactAdmin.Status.Action.bind(null, "warning", "Et voila: the warning message!!", 2000)}>Send a warning message for 2s</B.Button></li>
-          <li><B.Button bsStyle="link" onClick={ReactAdmin.Status.Action.bind(null, "success", "Et voila: the success message!!", 1000)}>Send a short success message</B.Button></li>
-          <li><B.Button bsStyle="link" onClick={ReactAdmin.Status.Action.bind(null, "info", "Et voila: the information message!!", 1000000)}>Send a very long information message</B.Button></li>
-        </ul>
-      </div>
-    )
-  }
+export default React.createClass({
+    addNotification() {
+        ReactAdmin.Notification.Action(NotificationElement, {
+            name: "the new notification",
+            action: "update",
+            id: 1
+        });
+    },
+    render() {
+        return (
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-md-12">
+                        <div class="page-header">
+                            <h1>Welcome!</h1>
+                        </div>
+                        <div className="well">
+                            This is an interactive demo of the <code>React Admin</code> project.
+                            You can click on the different elements to see what there are up too.<br/>
+                            You also see the demo as a learning project to build your next application.
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
+                        <h2>Features</h2>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
+                        <h3>Notification</h3>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <p className="well">
+                            The notification will render a new element on the left panel. To send a notification, just
+                            send a component and its related props to <code>ReactAdmin.Notification.Action</code> action.
+                        </p>
+                    </div>
+                    <div className="col-md-6">
+                        <B.Button bsStyle="default" onClick={this.addNotification}>Add Notification</B.Button>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
+                        <h3>Status</h3>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <p className="well">
+                            The status is a small visual element used to send confirmation or error notice to the user.
+                        </p>
+                    </div>
+                    <div className="col-md-6">
+                        <p>send status</p>
+                        <B.ButtonGroup>
+                            <B.Button bsStyle="default" onClick={ReactAdmin.Status.Action.bind(null, "warning", "Et voila: the warning message!!", 2000)}>warning for 2s</B.Button>
+                            <B.Button bsStyle="default" onClick={ReactAdmin.Status.Action.bind(null, "success", "Et voila: the success message!!", 1000)}>short success message</B.Button>
+                            <B.Button bsStyle="default" onClick={ReactAdmin.Status.Action.bind(null, "info", "Et voila: the information message!!", 1000000)}>very long information</B.Button>
+                        </B.ButtonGroup>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 });
-
-module.exports = Dashboard;

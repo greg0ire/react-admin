@@ -8,79 +8,112 @@ var _ = require('lodash');
 
 var ReactAdmin = require('react-admin');
 
-var Form = React.createClass({
-  mixins: [Router.State, Reflux.ListenerMixin],
+var Store = require('./Store.jsx');
 
-  getInitialState: function() {
-    return {
-      node: {
-        name: "loading node ..."
-      },
-      errors: {}
-    };
-  },
+var NotificationElement = require('component/NotificationElement.jsx');
 
-  componentDidMount: function() {
-    this.loadData();
-  },
 
-  refreshView: function() {
-    this.setState({
-      node: this.state.node
-    });
-  },
+module.exports = React.createClass({
+    mixins: [Router.State, Reflux.ListenerMixin],
 
-  componentWillReceiveProps: function() {
-    this.loadData();
-  },
+    getInitialState() {
+        // define default values
+        return {
+            object: {
+                name: "loading node ..."
+            },
+            errors: {}
+        };
+    },
 
-  submit: function() {
-        // todo ...
-  },
+    componentDidMount() {
+        this.loadData();
+    },
 
-  loadData: function() {
-        // todo
-  },
+    refreshView() {
+        this.setState({
+            object: Store.objectsStore.objects[this.getParams().id]
+        });
+    },
 
-  render: function() {
+    componentWillReceiveProps() {
+        this.loadData();
+    },
 
-        // todo
+    submit() {
+        // Of course you need to post those data to a remote server
+        var errors = {};
+        if (!(!isNaN(parseFloat(this.state.object.account)) && isFinite(this.state.object.account))) {
+            errors['object.account'] = ["Please provide a valid account number"];
+        }
 
-    return (
-      <div className="col-sm-12 col-md-12 main">
-        <h2 className="sub-header">Edit {this.state.node.name} (rev: {this.state.node.revision}) </h2>
+        if (this.state.object.name.length == 0) {
+            errors['object.name'] = ["Name cannot be emtpy"];
+        }
 
-        <form>
-          <div className="row">
-            <div className="col-sm-6">
-              <ReactAdmin.TextInput form={this} property="name" label="Name" help="Enter the name"/>
-              <ReactAdmin.TextInput form={this} property="slug" label="Slug" help="Enter the slug"/>
+        if (Object.keys(errors).length > 0) {
+            ReactAdmin.Status.Action('danger', "Errors occurs while saving", 4000);
+        } else {
+            ReactAdmin.Status.Action('success', "The object has been saved", 2000);
+
+            ReactAdmin.Notification.Action(NotificationElement, {
+                name: this.state.object.name,
+                action: "Save",
+                id: this.state.object.id
+            });
+        }
+
+        this.setState({
+            'errors': errors
+        });
+
+        Store.saveAction(this.state.object);
+    },
+
+    loadData() {
+        this.setState({
+            object: Store.objectsStore.objects[this.getParams().id]
+        });
+    },
+
+    render() {
+        return (
+            <div className="col-sm-12 col-md-12 main">
+                <h2 className="sub-header">Edit {this.state.object.name} </h2>
+
+                <div className="well">
+                    This is a test form, no data are sent, you can try to clear the name or account fields to
+                    see validation errors.
+                </div>
+
+                <form>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <ReactAdmin.TextInput form={this} property="object.name" label="Name" help="The name"/>
+
+                            <ReactAdmin.TextAreaInput form={this} property="object.bio" label="Biography" />
+                        </div>
+                        <div className="col-sm-6">
+                            <ReactAdmin.TextInput form={this} property="object.account" label="account" help="Account reference"/>
+
+                            <ReactAdmin.BooleanSelect form={this} property="object.enabled" label="enabled">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </ReactAdmin.BooleanSelect>
+
+                            <ReactAdmin.NumberSelect form={this} property="object.status" label="Status">
+                                <option value="0">New</option>
+                                <option value="1">Draft</option>
+                                <option value="2">Completed</option>
+                                <option value="3">Validated</option>
+                            </ReactAdmin.NumberSelect>
+
+                        </div>
+                    </div>
+                </form>
+
+                <B.Button bsStyle="primary" onClick={this.submit}>Save</B.Button>
             </div>
-            <div className="col-sm-6">
-              <ReactAdmin.BooleanSelect form={this} property="enabled" label="enabled">
-                  <option value="1">Yes</option>
-                  <option value="0">No</option>
-              </ReactAdmin.BooleanSelect>
-
-              <ReactAdmin.NumberSelect form={this} property="status" label="Status">
-                  <option value="0">New</option>
-                  <option value="1">Draft</option>
-                  <option value="2">Completed</option>
-                  <option value="3">Validated</option>
-              </ReactAdmin.NumberSelect>
-
-              <ReactAdmin.NumberInput form={this} property="weight" help="error message " label="Weight" />
-            </div>
-          </div>
-
-          {CustomForm}
-        </form>
-
-        <B.Button bsStyle="primary" onClick={this.submit}>Save</B.Button>
-      </div>
-    );
-  }
+        );
+    }
 });
-
-module.exports = Form;
-

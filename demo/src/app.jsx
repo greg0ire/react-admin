@@ -1,16 +1,14 @@
 'use strict';
 
-var React = require('react/addons');
-var Router = require('react-router');
-var B = require('react-bootstrap');
-var RB = require('react-router-bootstrap');
-var ReactAdmin = require('react-admin');
-var Reflux = require('reflux');
-var _ = require('lodash');
+var React       = require('react/addons');
+var Router      = require('react-router');
+var B           = require('react-bootstrap');
+var RB          = require('react-router-bootstrap');
+var ReactAdmin  = require('react-admin');
+var Reflux      = require('reflux');
 
-var Dashboard = require('layouts/Dashboard.jsx');
-
-var App1 = require('applications/app1');
+var Dashboard   = require('layouts/Dashboard.jsx');
+var App1        = require('applications/app1/index.jsx');
 
 /**
  *  Define the global layout of your application
@@ -18,72 +16,70 @@ var App1 = require('applications/app1');
  *  on each defined applications.
  */
 var App = React.createClass({
-  mixins: [Reflux.ListenerMixin],
-  getInitialState: function() {
-    return {
-       showNotification: false,
-       countNotification: 0,
-       apps: []
-    };
-  },
-  componentDidMount: function () {
-      this.listenTo(ReactAdmin.Notification.Store, this.onNotification);
-  },
-  onNotification: function(notification) {
-      this.setState({
-        countNotification: this.state.countNotification + 1
-      });
-  },
-  toggleNotification: function(event) {
-      this.setState({
-        showNotification: !this.state.showNotification,
-        countNotification: !this.state.showNotification ? 0 : this.state.countNotification
-      });
+    mixins: [Reflux.ListenerMixin],
+    getInitialState() {
+        return {
+           showNotification: false,
+           countNotification: 0,
+           apps: []
+        };
+    },
+    componentDidMount() {
+        this.listenTo(ReactAdmin.Notification.Store, this.onNotification);
+    },
+    onNotification(notification) {
+        this.setState({
+            countNotification: this.state.countNotification + 1
+        });
+    },
+    toggleNotification(event) {
+        this.setState({
+            showNotification: !this.state.showNotification,
+            countNotification: !this.state.showNotification ? 0 : this.state.countNotification
+        });
 
-      event.stopPropagation();
-      event.preventDefault();
-  },
-  render: function () {
-    var leftColumn = this.state.showNotification ? "col-md-9" : "col-md-12";
-    var rightColumn = this.state.showNotification ? "col-md-3" : "hide";
+        event.stopPropagation();
+        event.preventDefault();
+    },
+    render() {
+        var leftColumn = this.state.showNotification ? "col-md-9" : "col-md-12";
+        var rightColumn = this.state.showNotification ? "col-md-3" : "hide";
 
-    var classes = React.addons.classSet({
-      'label label-danger': true,
-      'hide': this.state.countNotification == 0
-    });
+        var classes = React.addons.classSet({
+            'label label-danger': true,
+            'hide': this.state.countNotification == 0
+        });
 
-    return (
-      <div>
-        <B.Navbar inverse={true} fixedTop={true} fluid={true} brand="React Admin Demo">
-            <B.Nav activeKey={1} right={true} navbar={true}>
-              <RB.NavItemLink to="homepage">Dashboard</RB.NavItemLink>
-              <RB.NavItemLink to="app1">Demo</RB.NavItemLink>
-              <B.NavItem onClick={this.toggleNotification}>
-                <i className="fa fa-bell-o"></i>
-                <span className={classes}>{this.state.countNotification}</span>
-              </B.NavItem>
-            </B.Nav>
-        </B.Navbar>
-
-        <div className="container-fluid">
-          <ReactAdmin.Status.Component />
-          <div className="row">
-            <div className={leftColumn}>
-              <div className="row">
-                <Router.RouteHandler />
-              </div>
+        return (
+            <div>
+                <B.Navbar inverse={true} fixedTop={true} fluid={true} brand="React Admin Demo">
+                    <B.Nav activeKey={1} right={true} navbar={true}>
+                        <RB.NavItemLink to="homepage">Dashboard</RB.NavItemLink>
+                        <RB.NavItemLink to="app1">Demo</RB.NavItemLink>
+                        <B.NavItem onClick={this.toggleNotification}>
+                            <i className="fa fa-bell-o"></i>
+                            <span className={classes}>{this.state.countNotification}</span>
+                        </B.NavItem>
+                    </B.Nav>
+                </B.Navbar>
+                <div className="container-fluid">
+                    <ReactAdmin.Status.Component />
+                        <div className="row">
+                            <div className={leftColumn}>
+                                <div className="row">
+                                    <Router.RouteHandler />
+                                </div>
+                            </div>
+                            <div className={rightColumn}>
+                                <div className="row">
+                                <ReactAdmin.Notification.Component />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div className={rightColumn}>
-              <div className="row">
-                <ReactAdmin.Notification.Component />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+        );
+    }
 });
 
 /**
@@ -91,18 +87,18 @@ var App = React.createClass({
  * Feel free to build your own ...
  */
 var DebugRouter = React.createClass({
-  mixins: [Router.State],
-  render: function() {
-    var message = this.getPathname();
+    mixins: [Router.State],
+    render() {
+        var message = this.getPathname();
 
-    return <div className="col-sm-12 col-md-12 main">
-      <h2>Oh Oh ... Page does not exist </h2>
-      <h3>underwood error code is 404</h3>
-      <p>
-        {message}
-      </p>
-    </div>
-  }
+        return <div className="col-sm-12 col-md-12 main">
+            <h2>Oh Oh ... Page does not exist </h2>
+            <h3>underwood error code is 404</h3>
+            <p>
+                {message}
+            </p>
+        </div>
+    }
 });
 
 /**
@@ -110,34 +106,34 @@ var DebugRouter = React.createClass({
  * You can append any routes you want
  */
 var routes = (
-  <Router.Route name="homepage" path="/" handler={App}>
-    <Router.DefaultRoute handler={Dashboard}/>
-    <Router.NotFoundRoute handler={DebugRouter}/>
+    <Router.Route name="homepage" path="/" handler={App}>
+        <Router.DefaultRoute handler={Dashboard}/>
+        <Router.NotFoundRoute handler={DebugRouter}/>
 
-    {App1.getRoutes()}
+        {App1.getRoutes()}
 
-  </Router.Route>
+    </Router.Route>
 );
 
 var NotificationElement = require('component/NotificationElement.jsx');
 
 // add fake notification
 ReactAdmin.Notification.Action(NotificationElement, {
-  name: "The first notification",
-  action: "create",
-  icon: 'fa-futbol-o fa-spin'
+    name: "The first notification",
+    action: "create",
+    icon: 'fa-futbol-o fa-spin',
+    id: 1
 });
 
 ReactAdmin.Notification.Action(NotificationElement, {
-  name: "The second notification",
-  action: "update",
-  icon: 'fa-coffee'
+    name: "The second notification",
+    action: "update",
+    icon: 'fa-coffee',
+    id: 2
 });
 
 
 /**
  * Start the application, the app id is set in the index.html page
  */
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.getElementById("app"));
-});
+Router.run(routes, Handler => React.render(<Handler/>, document.getElementById("app")));
