@@ -55,7 +55,7 @@
     "gulp-sourcemaps": "~1.5.0",
     "jest-cli": "~0.2.2",
     "jest": "~0.1.37",
-    "6to5-jest": "~3.0.0",
+    "babel-jest": "~3.0.0",
     "vinyl-source-stream": "~1.0.0",
     "vinyl-buffer": "~1.0.0",
     "vinyl-transform": "~1.0.0",
@@ -83,7 +83,7 @@
     "node-sass": "~3.0.0-pre"
   },
   "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/6to5-jest",
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "testFileExtensions": [
       "es6",
       "js"
