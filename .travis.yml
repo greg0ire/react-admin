@@ -5,4 +5,7 @@ node_js:
   - 0.11
 
 script:
+  - npm install -g bower
+  - bower install
+  - run npm install -fg styledocco
   - make test
