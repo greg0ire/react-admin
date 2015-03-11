@@ -7,17 +7,17 @@
 
 var superagent = jest.genMockFunction().mockReturnThis();
 
-var Response = jest.genMockFunction().mockImplementation(function() {
-  this.status = 200;
-  this.ok = true;
+var Response = jest.genMockFunction().mockImplementation(function () {
+    this.status = 200;
+    this.ok = true;
 });
 
 Response.prototype.get = jest.genMockFunction();
 Response.prototype.toError = jest.genMockFunction();
 
-var Request = jest.genMockFunction().mockImplementation(function(method, url) {
-  this.method = method;
-  this.url = url;
+var Request = jest.genMockFunction().mockImplementation(function (method, url) {
+    this.method = method;
+    this.url = url;
 });
 
 Request.prototype.accept = jest.genMockFunction().mockReturnThis();
@@ -26,22 +26,22 @@ Request.prototype.send = jest.genMockFunction().mockReturnThis();
 Request.prototype.field = jest.genMockFunction().mockReturnThis();
 Request.prototype.query = jest.genMockFunction().mockReturnThis();
 
-Request.prototype.end = jest.genMockFunction().mockImplementation(function(callback) {
-  if (superagent.mockDelay) {
-    this.delayTimer = setTimeout(callback, 0, superagent.mockError, superagent.mockResponse);
+Request.prototype.end = jest.genMockFunction().mockImplementation(function (callback) {
+    if (superagent.mockDelay) {
+        this.delayTimer = setTimeout(callback, 0, superagent.mockError, superagent.mockResponse);
 
-    return;
-  }
+        return;
+    }
 
-  callback(superagent.mockError, superagent.mockResponse);
+    callback(superagent.mockError, superagent.mockResponse);
 });
 
-Request.prototype.abort = jest.genMockFunction().mockImplementation(function() {
-  this.aborted = true;
+Request.prototype.abort = jest.genMockFunction().mockImplementation(function () {
+    this.aborted = true;
 
-  if (this.delayTimer) {
-    clearTimeout(this.delayTimer);
-  }
+    if (this.delayTimer) {
+        clearTimeout(this.delayTimer);
+    }
 });
 
 superagent.Request = Request;

@@ -38,10 +38,11 @@ The best way to get your bug fixed is to provide a reduced test case. jsFiddle, 
 
 * Use semicolons;
 * Commas last,
-* 2 spaces for indentation (no tabs)
+* 4 spaces for indentation (no tabs)
 * Prefer `'` over `"`
 * `'use strict';`
 * "Attractive"
+* check the current code ;)
 
 ## License
 

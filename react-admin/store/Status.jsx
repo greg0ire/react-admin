@@ -7,17 +7,17 @@ var Reflux = require('reflux');
 var action = Reflux.createAction();
 
 var store = Reflux.createStore({
-  init: function() {
-    this.listenTo(action, this.onUpdate);
-  },
-  onUpdate: function() {
-    this.trigger.apply(this, arguments);
-  }
+    init: function () {
+        this.listenTo(action, this.onUpdate);
+    },
+    onUpdate: function () {
+        this.trigger.apply(this, arguments);
+    }
 });
 
 var component = React.createClass({
     mixins: [Reflux.ListenerMixin],
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             show: true,
             message: 'Welcome Back!!',
@@ -25,7 +25,7 @@ var component = React.createClass({
             dismissAfter: 4000
         };
     },
-    onStatusChange: function(style, message, dismissAfter) {
+    onStatusChange: function (style, message, dismissAfter) {
         this.setState({
             style: style,
             message: message,
@@ -36,20 +36,20 @@ var component = React.createClass({
     componentDidMount: function () {
         this.listenTo(store, this.onStatusChange);
     },
-    render: function() {
+    render: function () {
         if (!this.state.show) {
-          return <span />;
+            return <span />;
         }
 
         return (
-          <div className="react-app-status">
-            <B.Alert bsStyle={this.state.style} onDismiss={this.handleAlertDismiss} dismissAfter={this.state.dismissAfter}>
+            <div className="react-app-status">
+                <B.Alert bsStyle={this.state.style} onDismiss={this.handleAlertDismiss} dismissAfter={this.state.dismissAfter}>
               {this.state.message}
-            </B.Alert>
-          </div>
+                </B.Alert>
+            </div>
         );
     },
-    handleAlertDismiss: function() {
+    handleAlertDismiss: function () {
         this.setState({show: false});
     }
 });

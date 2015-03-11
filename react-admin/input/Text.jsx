@@ -8,33 +8,33 @@ var ReactBootstrapMixin = require('./Bootstrap.jsx');
 
 
 var Text = Input.create({
-  type: 'text'
+    type: 'text'
 });
 
 var Password = Input.create({
-  type: 'password'
+    type: 'password'
 });
 
 var TextArea = Input.create({
-  type: 'textarea'
+    type: 'textarea'
 });
 
 var DoublePassword = Input.create({
-  mixins: [ReactBootstrapMixin],
+    mixins: [ReactBootstrapMixin],
 
-  render: function() {
-    return this.renderInput(
-      <span>
-        <B.Input type="text" />
-        <B.Input type="text" />
-      </span>
-    );
-  }
+    render: function () {
+        return this.renderInput(
+            <span>
+                <B.Input type="text" />
+                <B.Input type="text" />
+            </span>
+        );
+    }
 })
 
 module.exports = {
-  Text: Text,
-  Password: Password,
-  TextArea: TextArea,
-  DoublePassword: DoublePassword
+    Text: Text,
+    Password: Password,
+    TextArea: TextArea,
+    DoublePassword: DoublePassword
 }

@@ -8,11 +8,11 @@ var _ = require('lodash');
 var action = Reflux.createAction();
 
 var store = Reflux.createStore({
-    init: function() {
+    init: function () {
         this.history = []
         this.listenTo(action, this.addNotification);
     },
-    addNotification: function(component, props) {
+    addNotification: function (component, props) {
         this.history.unshift([component, props || {}]);
 
         if (this.history.length > 32) {
@@ -25,10 +25,10 @@ var store = Reflux.createStore({
 
 var component = React.createClass({
     mixins: [Reflux.ListenerMixin],
-    getInitialState: function() {
+    getInitialState: function () {
         return {};
     },
-    onNotifications: function(notifications) {
+    onNotifications: function (notifications) {
         this.setState({
             notifications: notifications,
         });
@@ -36,21 +36,21 @@ var component = React.createClass({
     componentDidMount: function () {
         this.listenTo(store, this.onNotifications);
     },
-    render: function() {
+    render: function () {
         var pos = 0;
         return (
-          <div className="react-app-notifications">
-            <h1>Notifications</h1>
-            <div>
-            {_.map(this.state.notifications, function(notification) {
+            <div className="react-app-notifications">
+                <h1>Notifications</h1>
+                <div>
+                    {_.map(this.state.notifications, function (notification) {
 
-                notification[1].key = "react-app-notification-element-" + pos;
-                pos++;
+                        notification[1].key = "react-app-notification-element-" + pos;
+                        pos++;
 
-                return React.createElement(notification[0], notification[1]);
-            }, this)}
+                        return React.createElement(notification[0], notification[1]);
+                    }, this)}
+                </div>
             </div>
-          </div>
         );
     }
 });
