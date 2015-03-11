@@ -78,7 +78,9 @@
     "gulp-styledocco": "0.0.3",
     "gulp-marked": "~1.0.0",
     "gulp-babel": "~4.0.0",
-    "babelify": "~5.0.4"
+    "babelify": "~5.0.4",
+    "gulp-uglify": "~1.1.0",
+    "node-sass": "~3.0.0-pre"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/6to5-jest",

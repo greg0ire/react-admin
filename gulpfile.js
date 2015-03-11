@@ -30,6 +30,7 @@ var transform = require('vinyl-transform');
 var runSequence = require('run-sequence');
 var styledocco = require('gulp-styledocco');
 var marked = require('gulp-marked');
+var uglify = require('gulp-uglify');
 
 
 gulp.task('default', function(cb) {
@@ -155,7 +156,7 @@ gulp.task('demo.js', ['demo.clean.js'], function(cb) {
         .on("error", function (err) { console.log("Error: " + err.message); })
         .pipe(source('app.js'))
         .pipe(buffer())
-        //.pipe(uglify())
+        .pipe(uglify())
         .pipe(gulp.dest("./dist/demo/js"));
 });
 
