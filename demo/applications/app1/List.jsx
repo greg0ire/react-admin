@@ -67,7 +67,7 @@ module.exports = ReactAdmin.createTable({
             </ReactAdmin.Card.Information>
 
             <ReactAdmin.Card.Actions>
-                The Link: <Router.Link to="app1.edit" params={{id: data.id}}>Edit</Router.Link>
+                <i className="fa fa-chevron-circle-right"></i> <Router.Link to="app1.edit" params={{id: data.id}}>Edit</Router.Link>
             </ReactAdmin.Card.Actions>
         </ReactAdmin.Card.List>
     }

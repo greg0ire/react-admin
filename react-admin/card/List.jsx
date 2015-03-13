@@ -11,7 +11,7 @@ var List = React.createClass({
                     {this.props.children}
                 </div>
             </B.Col>
-        )
+        );
     }
 });
 
