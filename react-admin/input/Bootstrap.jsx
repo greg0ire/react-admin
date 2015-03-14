@@ -7,7 +7,7 @@
  **/
 
 var React = require('react');
-var classSet = require("react/addons").classSet;
+var classNames = require('classnames');
 
 var ReactBootstrap = {
     getChecked: function () {
@@ -68,7 +68,7 @@ var ReactBootstrap = {
         };
 
         return this.props.hasFeedback ? (
-            React.createElement("span", {className: classSet(classes), key: "icon"})
+            React.createElement("span", {className: classNames(classes), key: "icon"})
         ) : null;
     },
 
@@ -87,7 +87,7 @@ var ReactBootstrap = {
         };
 
         return (
-            React.createElement("div", {className: classSet(classes), key: "checkboxRadioWrapper"},
+            React.createElement("div", {className: classNames(classes), key: "checkboxRadioWrapper"},
                 children
             )
         );
@@ -108,7 +108,7 @@ var ReactBootstrap = {
         classes[this.props.labelClassName] = this.props.labelClassName;
 
         return this.props.label ? (
-            React.createElement("label", {htmlFor: this.props.id, className: classSet(classes), key: "label"},
+            React.createElement("label", {htmlFor: this.props.id, className: classNames(classes), key: "label"},
                 children,
                 this.props.label
             )
@@ -126,7 +126,7 @@ var ReactBootstrap = {
         classes[this.props.groupClassName] = this.props.groupClassName;
 
         return (
-            React.createElement("div", {className: classSet(classes)},
+            React.createElement("div", {className: classNames(classes)},
                 children
             )
         );

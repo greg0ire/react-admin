@@ -28,7 +28,8 @@
   "dependencies": {
     "lodash": "~2.4.1",
     "url": "~0.10.0",
-    "superagent": ">=0.21"
+    "superagent": ">=0.21",
+    "classnames": "~1.1.4"
   },
   "peerDependencies": {
     "react": ">=0.12",

@@ -1,6 +1,6 @@
 'use strict';
 
-var React       = require('react/addons');
+var React       = require('react');
 var Router      = require('react-router');
 var B           = require('react-bootstrap');
 var RB          = require('react-router-bootstrap');
@@ -9,6 +9,7 @@ var Reflux      = require('reflux');
 
 var Dashboard   = require('layouts/Dashboard.jsx');
 var App1        = require('applications/app1/index.jsx');
+var classNames  = require('classnames');
 
 /**
  *  Define the global layout of your application
@@ -45,7 +46,7 @@ var App = React.createClass({
         var leftColumn = this.state.showNotification ? "col-md-9" : "col-md-12";
         var rightColumn = this.state.showNotification ? "col-md-3" : "hide";
 
-        var classes = React.addons.classSet({
+        var classes = classNames({
             'label label-danger': true,
             'hide': this.state.countNotification == 0
         });
