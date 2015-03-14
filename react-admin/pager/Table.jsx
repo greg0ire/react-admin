@@ -45,6 +45,9 @@ var BaseTable = {
         this.refreshGrid();
     },
 
+    refreshGrid: function() {
+        console.log("You need to implement the refreshGrid method");
+    },
     getFilters: function (extras) {
         var filters = {
             page: 1,
