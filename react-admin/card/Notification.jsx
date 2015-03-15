@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Notification = React.createClass({
+export default React.createClass({
     render () {
         return (
             <div className="card__notification">
@@ -11,5 +11,3 @@ var Notification = React.createClass({
         )
     }
 });
-
-module.exports = Notification;

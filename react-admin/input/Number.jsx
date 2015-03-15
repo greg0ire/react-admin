@@ -2,10 +2,8 @@
 
 var Input = require('./Input.jsx')
 
-var Number = Input.create({
+export default Input.create({
     updateValue (event) {
         this.setValue(this.parseInt(event.target.value));
     }
 });
-
-module.exports = Number

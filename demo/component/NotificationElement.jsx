@@ -6,7 +6,7 @@ var Router = require('react-router');
 
 var cx = React.classSet
 
-module.exports = React.createClass({
+export default React.createClass({
     getDefaultProps () {
         return {
             icon: 'fa-exclamation-triangle'

@@ -4,18 +4,18 @@ var React = require('react');
 var B = require('react-bootstrap');
 var Reflux = require('reflux');
 
-var action = Reflux.createAction();
+export var Action = Reflux.createAction();
 
-var store = Reflux.createStore({
+export var Store = Reflux.createStore({
     init () {
-        this.listenTo(action, this.onUpdate);
+        this.listenTo(Action, this.onUpdate);
     },
     onUpdate () {
         this.trigger.apply(this, arguments);
     }
 });
 
-var component = React.createClass({
+export var Component = React.createClass({
     mixins: [Reflux.ListenerMixin],
     getInitialState () {
         return {
@@ -34,7 +34,7 @@ var component = React.createClass({
         });
     },
     componentDidMount () {
-        this.listenTo(store, this.onStatusChange);
+        this.listenTo(Store, this.onStatusChange);
     },
     render () {
         if (!this.state.show) {
@@ -53,9 +53,3 @@ var component = React.createClass({
         this.setState({show: false});
     }
 });
-
-module.exports = {
-    Action: action,
-    Store: store,
-    Component: component
-}

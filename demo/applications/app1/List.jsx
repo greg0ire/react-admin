@@ -11,7 +11,7 @@ var faker = require('faker');
 
 var Store = require('./Store.jsx');
 
-module.exports = ReactAdmin.createTable({
+export default ReactAdmin.createTable({
     mixins: [Reflux.ListenerMixin],
     getDefaultProps() {
         return {

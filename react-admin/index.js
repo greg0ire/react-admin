@@ -12,7 +12,7 @@ module.exports = {
 
     // input used in form
     createInput: require("./input/Input.jsx").create,
-    BootstrapInput: require("./input/Bootstrap.jsx"),
+    BootstrapInput: require("./input/ReactBootstrap.jsx"),
 
     NumberInput: require("./input/Number.jsx"),
     BooleanInput: require("./input/Boolean.jsx"),

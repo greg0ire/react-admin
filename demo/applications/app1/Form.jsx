@@ -12,8 +12,7 @@ var Store = require('./Store.jsx');
 
 var NotificationElement = require('component/NotificationElement.jsx');
 
-
-module.exports = React.createClass({
+export default React.createClass({
     mixins: [Router.State, Reflux.ListenerMixin],
 
     getInitialState() {

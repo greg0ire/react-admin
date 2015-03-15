@@ -4,7 +4,7 @@ var Url = require("url");
 var Request = require("superagent");
 var _ = require("lodash");
 
-var EndPoint = function (baseurl, headers) {
+export default function (baseurl, headers) {
     var url = Url.parse(baseurl);
     var headers = headers || {};
 
@@ -141,5 +141,3 @@ var EndPoint = function (baseurl, headers) {
 
     return this;
 };
-
-module.exports = EndPoint;

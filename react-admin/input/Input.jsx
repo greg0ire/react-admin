@@ -106,6 +106,7 @@ var Base = {
 
         return isNaN(value) ? 0 : value;
     },
+
     render () {
         return <B.Input
             value={this.getValue()}
@@ -116,17 +117,15 @@ var Base = {
             onChange={this.updateValue}
             bsStyle={this.getStyle()}
         />
-    },
+    }
 };
 
-module.exports = {
-    create () {
-        var klass = _.merge({}, Base);
+export function create() {
+    var klass = _.merge({}, Base);
 
-        _.forEach(arguments, function (def) {
-            klass = _.merge(klass, def);
-        })
+    _.forEach(arguments, function (def) {
+        klass = _.merge(klass, def);
+    });
 
-        return React.createClass(klass);
-    }
+    return React.createClass(klass);
 };

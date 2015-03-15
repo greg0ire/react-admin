@@ -9,7 +9,7 @@
 var React = require('react');
 var classNames = require('classnames');
 
-var ReactBootstrap = {
+export default {
     getChecked () {
         return false;
     },
@@ -143,5 +143,3 @@ var ReactBootstrap = {
         ]);
     }
 };
-
-module.exports = ReactBootstrap;

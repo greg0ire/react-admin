@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Content = React.createClass({
+export default React.createClass({
     render () {
         return (
             <div className="card__content">
@@ -11,5 +11,3 @@ var Content = React.createClass({
         )
     }
 });
-
-module.exports = Content;

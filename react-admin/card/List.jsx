@@ -3,7 +3,7 @@
 var React = require('react');
 var B = require('react-bootstrap');
 
-var List = React.createClass({
+export default React.createClass({
     render () {
         return (
             <B.Col md={6}>
@@ -14,5 +14,3 @@ var List = React.createClass({
         );
     }
 });
-
-module.exports = List;

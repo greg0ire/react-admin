@@ -16,23 +16,24 @@ var BaseSelect = {
             onChange={this.updateValue}
             bsStyle={this.getStyle()}
         >
-      {this.props.children}
+            {this.props.children}
         </B.Input>
     }
-}
+};
 
-var SelectInput = Input.create(BaseSelect);
+export var Select = Input.create(BaseSelect);
 
-var NumberSelectInput = Input.create(BaseSelect, {
+export var NumberSelect = Input.create(BaseSelect, {
     updateValue (event) {
         this.setValue(this.parseInt(event.target.value))
     }
 });
 
-var BooleanSelectInput = Input.create(BaseSelect, {
+export var BooleanSelect = Input.create(BaseSelect, {
     updateValue (event) {
         this.setValue(this.isTrue(event.target.value));
     },
+
     render () {
         return <B.Input
             value={this.getValue() ? '1' : '0'}
@@ -42,13 +43,7 @@ var BooleanSelectInput = Input.create(BaseSelect, {
             onChange={this.updateValue}
             bsStyle={this.getStyle()}
         >
-    {this.props.children}
+             {this.props.children}
         </B.Input>
     }
 });
-
-module.exports = {
-    Select: SelectInput,
-    NumberSelect: NumberSelectInput,
-    BooleanSelect: BooleanSelectInput
-}

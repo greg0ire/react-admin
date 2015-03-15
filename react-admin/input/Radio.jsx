@@ -9,6 +9,7 @@ var BaseRadio = {
     isChecked () {
         return this.getValue() == this.props.value;
     },
+
     render () {
         return <B.Input
             name={this.props.name}
@@ -22,11 +23,11 @@ var BaseRadio = {
             bsStyle={this.getStyle()}
         />
     }
-}
+};
 
-var Radio = Input.create(BaseRadio);
+export var Radio = Input.create(BaseRadio);
 
-var NumberRadio = Input.create(BaseRadio, {
+export var NumberRadio = Input.create(BaseRadio, {
     updateValue (event) {
         this.setValue(this.parseInt(event.target.value));
     },
@@ -36,7 +37,7 @@ var NumberRadio = Input.create(BaseRadio, {
     }
 });
 
-var BooleanRadio = Input.create(BaseRadio, {
+export var BooleanRadio = Input.create(BaseRadio, {
     updateValue (event) {
         this.setValue(this.isTrue(event.target.value))
     },
@@ -45,9 +46,3 @@ var BooleanRadio = Input.create(BaseRadio, {
         return this.getValue() == this.isTrue(this.props.value);
     }
 });
-
-module.exports = {
-    Radio: Radio,
-    NumberRadio: NumberRadio,
-    BooleanRadio: BooleanRadio
-}

@@ -4,7 +4,7 @@ var Input = require('./Input.jsx')
 var React = require('react');
 var B = require('react-bootstrap');
 
-var Boolean = Input.create({
+export default Input.create({
     type: 'checkbox',
 
     updateValue (event) {
@@ -23,5 +23,3 @@ var Boolean = Input.create({
         />
     }
 });
-
-module.exports = Boolean;

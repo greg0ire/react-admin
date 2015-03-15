@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Title = React.createClass({
+export default React.createClass({
     render () {
         return (
             <div className="card__title">
@@ -11,5 +11,3 @@ var Title = React.createClass({
         )
     }
 });
-
-module.exports = Title;

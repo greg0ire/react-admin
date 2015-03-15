@@ -68,7 +68,7 @@ var Container = new (function () {
     return this;
 })();
 
-module.exports = function () {
+export default function () {
     if (arguments.length == 1) {
         return Container.get(arguments[0]);
     }
@@ -78,4 +78,4 @@ module.exports = function () {
     }
 
     return Container;
-}
+};

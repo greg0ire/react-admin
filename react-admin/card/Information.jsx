@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Information = React.createClass({
+export default React.createClass({
     render () {
         return (
             <div className="card__information">
@@ -11,5 +11,3 @@ var Information = React.createClass({
         )
     }
 });
-
-module.exports = Information;

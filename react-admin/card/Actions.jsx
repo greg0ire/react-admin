@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Actions = React.createClass({
+export default React.createClass({
     render () {
         return (
             <div className="card__actions">
@@ -11,5 +11,3 @@ var Actions = React.createClass({
         )
     }
 });
-
-module.exports = Actions;

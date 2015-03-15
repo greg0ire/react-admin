@@ -1,6 +1,6 @@
 'use strict';
 
-function ReadValue(obj, path, def) {
+export function ReadValue(obj, path, def) {
     for (var i = 0, path = path.split("."), len = path.length; i < len; i++) {
         if (!obj || typeof obj !== "object") {
             return def;
@@ -15,7 +15,7 @@ function ReadValue(obj, path, def) {
     return obj;
 }
 
-function WriteValue(obj, path, value) {
+export function WriteValue(obj, path, value) {
     var paths = path.split(".");
     var property = paths.pop();
 
@@ -32,8 +32,3 @@ function WriteValue(obj, path, value) {
 
     obj[property] = value;
 }
-
-module.exports = {
-    ReadValue: ReadValue,
-    WriteValue: WriteValue
-};

@@ -10,7 +10,7 @@ var Card = {
     Icon: require('../card/Icon.jsx'),
     Information: require('../card/Information.jsx'),
     Notification: require('../card/Notification.jsx')
-}
+};
 
 var _ = require('lodash');
 var Url = require('url');
@@ -48,14 +48,15 @@ var BaseTable = {
     refreshGrid() {
         console.log("You need to implement the refreshGrid method");
     },
+
     getFilters (extras) {
         var filters = {
             page: 1,
             per_page: 32
-        }
+        };
 
-        filters = _.assign(filters, this.getQuery())
-        filters = _.assign(filters, extras || {})
+        filters = _.assign(filters, this.getQuery());
+        filters = _.assign(filters, extras || {});
 
         filters.page = parseInt(filters.page, 10);
         filters.per_page = parseInt(filters.per_page, 10);
@@ -120,17 +121,16 @@ function keep(key, obj, def) {
     }
 }
 
-module.exports = {
-    create () {
-        var klass = _.merge({mixins: []}, BaseTable);
+export function create() {
+    var klass = _.merge({mixins: []}, BaseTable);
 
-        _.forEach(arguments, function (def) {
-            keep('mixins', klass, def);
-            keep('propTypes', klass, def);
+    _.forEach(arguments, function (def) {
+        keep('mixins', klass, def);
+        keep('propTypes', klass, def);
 
-            klass = _.merge(klass, def);
-        })
+        klass = _.merge(klass, def);
+    });
 
-        return React.createClass(klass);
-    }
-};
+    return React.createClass(klass);
+}
+

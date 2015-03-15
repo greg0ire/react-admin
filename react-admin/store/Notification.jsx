@@ -5,12 +5,12 @@ var B = require('react-bootstrap');
 var Reflux = require('reflux');
 var _ = require('lodash');
 
-var action = Reflux.createAction();
+export var Action = Reflux.createAction();
 
-var store = Reflux.createStore({
+export var Store = Reflux.createStore({
     init () {
         this.history = []
-        this.listenTo(action, this.addNotification);
+        this.listenTo(Action, this.addNotification);
     },
     addNotification (component, props) {
         this.history.unshift([component, props || {}]);
@@ -23,7 +23,7 @@ var store = Reflux.createStore({
     }
 });
 
-var component = React.createClass({
+export var Component = React.createClass({
     mixins: [Reflux.ListenerMixin],
     getInitialState () {
         return {};
@@ -34,7 +34,7 @@ var component = React.createClass({
         });
     },
     componentDidMount () {
-        this.listenTo(store, this.onNotifications);
+        this.listenTo(Store, this.onNotifications);
     },
     render () {
         var pos = 0;
@@ -54,9 +54,3 @@ var component = React.createClass({
         );
     }
 });
-
-module.exports = {
-    Action: action,
-    Store: store,
-    Component: component
-}

@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Icon = React.createClass({
+export default React.createClass({
     getDefaultProps () {
         return {
             type: 'circle'
@@ -29,7 +29,3 @@ var Icon = React.createClass({
         )
     }
 });
-
-module.exports = Icon;
-
-

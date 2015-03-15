@@ -3,9 +3,9 @@
 var reflux      = require('reflux');
 var faker       = require('faker');
 
-var saveAction = reflux.createAction();
+export var saveAction = reflux.createAction();
 
-var objectsStore = reflux.createStore({
+export var objectsStore = reflux.createStore({
    init() {
        this.objects = {};
        for (var i = 0; i < 256; i++) {
@@ -28,8 +28,3 @@ var objectsStore = reflux.createStore({
        this.trigger.apply(this, this.objects)
    }
 });
-
-module.exports = {
-    saveAction: saveAction,
-    objectsStore: objectsStore
-}

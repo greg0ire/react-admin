@@ -18,7 +18,7 @@ var View = React.createClass({
 /**
  * Define the routes required to list or edit the node
  */
-function getRoutes() {
+export function getRoutes() {
    return <Router.Route name="app1" handler={View} >
 
       <Router.Route name="app1.list"  path="list" handler={List} />
@@ -26,8 +26,4 @@ function getRoutes() {
 
       <Router.DefaultRoute handler={List} />
    </Router.Route>
-}
-
-module.exports = {
-    getRoutes: getRoutes
 }
