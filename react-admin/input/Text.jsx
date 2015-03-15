@@ -22,7 +22,7 @@ var TextArea = Input.create({
 var DoublePassword = Input.create({
     mixins: [ReactBootstrapMixin],
 
-    render: function () {
+    render () {
         return this.renderInput(
             <span>
                 <B.Input type="text" />

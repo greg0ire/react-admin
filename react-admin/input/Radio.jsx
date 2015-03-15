@@ -6,10 +6,10 @@ var B = require('react-bootstrap');
 
 var BaseRadio = {
     type: 'radio',
-    isChecked: function () {
+    isChecked () {
         return this.getValue() == this.props.value;
     },
-    render: function () {
+    render () {
         return <B.Input
             name={this.props.name}
             checked={this.isChecked()}
@@ -27,21 +27,21 @@ var BaseRadio = {
 var Radio = Input.create(BaseRadio);
 
 var NumberRadio = Input.create(BaseRadio, {
-    updateValue: function (event) {
+    updateValue (event) {
         this.setValue(this.parseInt(event.target.value));
     },
 
-    isChecked: function () {
+    isChecked () {
         return this.getValue() == this.parseInt(this.props.value);
     }
 });
 
 var BooleanRadio = Input.create(BaseRadio, {
-    updateValue: function (event) {
+    updateValue (event) {
         this.setValue(this.isTrue(event.target.value))
     },
 
-    isChecked: function () {
+    isChecked () {
         return this.getValue() == this.isTrue(this.props.value);
     }
 });

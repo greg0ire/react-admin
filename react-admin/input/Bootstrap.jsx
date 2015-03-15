@@ -10,19 +10,19 @@ var React = require('react');
 var classNames = require('classnames');
 
 var ReactBootstrap = {
-    getChecked: function () {
+    getChecked () {
         return false;
     },
 
-    isCheckboxOrRadio: function () {
+    isCheckboxOrRadio () {
         return false;
     },
 
-    isFile: function () {
+    isFile () {
         return false;
     },
 
-    renderInputGroup: function (children) {
+    renderInputGroup (children) {
         var addonBefore = this.props.addonBefore ? (
             React.createElement("span", {className: "input-group-addon", key: "addonBefore"},
                 this.props.addonBefore
@@ -58,7 +58,7 @@ var ReactBootstrap = {
         ) : children;
     },
 
-    renderIcon: function () {
+    renderIcon () {
         var classes = {
             'glyphicon': true,
             'form-control-feedback': true,
@@ -72,7 +72,7 @@ var ReactBootstrap = {
         ) : null;
     },
 
-    renderHelp: function () {
+    renderHelp () {
         return this.props.help ? (
             React.createElement("span", {className: "help-block", key: "help"},
                 this.getHelp()
@@ -80,7 +80,7 @@ var ReactBootstrap = {
         ) : null;
     },
 
-    renderCheckboxandRadioWrapper: function (children) {
+    renderCheckboxandRadioWrapper (children) {
         var classes = {
             'checkbox': this.props.type === 'checkbox',
             'radio': this.props.type === 'radio'
@@ -93,7 +93,7 @@ var ReactBootstrap = {
         );
     },
 
-    renderWrapper: function (children) {
+    renderWrapper (children) {
         return this.props.wrapperClassName ? (
             React.createElement("div", {className: this.props.wrapperClassName, key: "wrapper"},
                 children
@@ -101,7 +101,7 @@ var ReactBootstrap = {
         ) : children;
     },
 
-    renderLabel: function (children) {
+    renderLabel (children) {
         var classes = {
             'control-label': !this.isCheckboxOrRadio()
         };
@@ -115,7 +115,7 @@ var ReactBootstrap = {
         ) : children;
     },
 
-    renderFormGroup: function (children) {
+    renderFormGroup (children) {
         var classes = {
             'form-group': true,
             'has-feedback': this.props.hasFeedback,
@@ -132,7 +132,7 @@ var ReactBootstrap = {
         );
     },
 
-    renderInput: function (input) {
+    renderInput (input) {
         return this.renderFormGroup([
             this.renderLabel(),
             this.renderWrapper([

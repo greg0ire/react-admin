@@ -8,11 +8,11 @@ var _ = require('lodash');
 var action = Reflux.createAction();
 
 var store = Reflux.createStore({
-    init: function () {
+    init () {
         this.history = []
         this.listenTo(action, this.addNotification);
     },
-    addNotification: function (component, props) {
+    addNotification (component, props) {
         this.history.unshift([component, props || {}]);
 
         if (this.history.length > 32) {
@@ -25,18 +25,18 @@ var store = Reflux.createStore({
 
 var component = React.createClass({
     mixins: [Reflux.ListenerMixin],
-    getInitialState: function () {
+    getInitialState () {
         return {};
     },
-    onNotifications: function (notifications) {
+    onNotifications (notifications) {
         this.setState({
             notifications: notifications,
         });
     },
-    componentDidMount: function () {
+    componentDidMount () {
         this.listenTo(store, this.onNotifications);
     },
-    render: function () {
+    render () {
         var pos = 0;
         return (
             <div className="react-app-notifications">

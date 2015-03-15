@@ -3,13 +3,13 @@
 var React = require('react');
 
 var Icon = React.createClass({
-    getDefaultProps: function () {
+    getDefaultProps () {
         return {
             type: 'circle'
         };
     },
 
-    getInitialState: function () {
+    getInitialState () {
         return {
             type: 'circle'
         };
@@ -19,7 +19,7 @@ var Icon = React.createClass({
         type: React.PropTypes.string.isRequired
     },
 
-    render: function () {
+    render () {
         var className = "fa fa-" + this.props.type + " fa-5x";
 
         return (

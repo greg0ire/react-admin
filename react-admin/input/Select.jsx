@@ -6,7 +6,7 @@ var B = require('react-bootstrap');
 
 var BaseSelect = {
     type: 'select',
-    render: function () {
+    render () {
         return <B.Input
             value={this.getValue()}
             default="Default value ..."
@@ -24,16 +24,16 @@ var BaseSelect = {
 var SelectInput = Input.create(BaseSelect);
 
 var NumberSelectInput = Input.create(BaseSelect, {
-    updateValue: function (event) {
+    updateValue (event) {
         this.setValue(this.parseInt(event.target.value))
     }
 });
 
 var BooleanSelectInput = Input.create(BaseSelect, {
-    updateValue: function (event) {
+    updateValue (event) {
         this.setValue(this.isTrue(event.target.value));
     },
-    render: function () {
+    render () {
         return <B.Input
             value={this.getValue() ? '1' : '0'}
             type={this.type}

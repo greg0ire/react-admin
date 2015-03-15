@@ -4,7 +4,7 @@ var React = require('react');
 var B = require('react-bootstrap');
 
 var List = React.createClass({
-    render: function () {
+    render () {
         return (
             <B.Col md={6}>
                 <div className="card">

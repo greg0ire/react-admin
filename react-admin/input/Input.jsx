@@ -8,7 +8,7 @@ var Base = {
     type: 'text',
 
     propTypes: {
-        bsStyle: function (props, propName, componentName) {
+        bsStyle (props, propName, componentName) {
             if (props.type === 'submit') {
                 // Return early if `type=submit` as the `Button` component
                 // it transfers these props to has its own propType checks.
@@ -23,7 +23,7 @@ var Base = {
         form: React.PropTypes.object
     },
 
-    readValue: function (obj, path, def) {
+    readValue (obj, path, def) {
         for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
             if (!obj || typeof obj !== 'object') {
                 return def;
@@ -38,7 +38,7 @@ var Base = {
         return obj;
     },
 
-    writeValue: function (obj, path, value) {
+    writeValue (obj, path, value) {
         var paths = path.split('.');
         var property = paths.pop();
 
@@ -57,7 +57,7 @@ var Base = {
         obj[property] = value;
     },
 
-    getErrors: function () {
+    getErrors () {
         if (!this.props.form) {
             return [];
         }
@@ -65,7 +65,7 @@ var Base = {
         return this.props.form.state.errors[this.props.property] || [];
     },
 
-    getHelp: function () {
+    getHelp () {
         var errors = this.getErrors();
 
         if (errors.length == 0) {
@@ -75,11 +75,11 @@ var Base = {
         return _(errors).join(",") + (this.props.help ? this.props.help : '')
     },
 
-    updateValue: function (event) {
+    updateValue (event) {
         this.setValue(event.target.value);
     },
 
-    getValue: function () {
+    getValue () {
         if (!this.props.property) {
             return;
         }
@@ -87,26 +87,26 @@ var Base = {
         return this.readValue(this.props.form.state, this.props.property)
     },
 
-    getStyle: function () {
+    getStyle () {
         return this.getErrors().length > 0 ? 'error' : null;
     },
 
-    setValue: function (value) {
+    setValue (value) {
         this.writeValue(this.props.form.state, this.props.property, value)
 
         this.props.form.refreshView();
     },
 
-    isTrue: function (value) {
+    isTrue (value) {
         return value == "on" || value == "true" || value == "1" || value == 1 || value == true;
     },
 
-    parseInt: function (value, base) {
+    parseInt (value, base) {
         var value = parseInt(value, base || 10);
 
         return isNaN(value) ? 0 : value;
     },
-    render: function () {
+    render () {
         return <B.Input
             value={this.getValue()}
             default="Default value ..."
@@ -120,7 +120,7 @@ var Base = {
 };
 
 module.exports = {
-    create: function () {
+    create () {
         var klass = _.merge({}, Base);
 
         _.forEach(arguments, function (def) {

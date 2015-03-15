@@ -15,7 +15,7 @@ describe('Notidication', function () {
             propTypes: {
                 custom: React.PropTypes.string.isRequired
             },
-            render: function () {
+            render () {
                 return <b>Custom value: {this.props.custom}</b>
             }
         });

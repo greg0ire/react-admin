@@ -7,17 +7,17 @@ var Reflux = require('reflux');
 var action = Reflux.createAction();
 
 var store = Reflux.createStore({
-    init: function () {
+    init () {
         this.listenTo(action, this.onUpdate);
     },
-    onUpdate: function () {
+    onUpdate () {
         this.trigger.apply(this, arguments);
     }
 });
 
 var component = React.createClass({
     mixins: [Reflux.ListenerMixin],
-    getInitialState: function () {
+    getInitialState () {
         return {
             show: true,
             message: 'Welcome Back!!',
@@ -25,7 +25,7 @@ var component = React.createClass({
             dismissAfter: 4000
         };
     },
-    onStatusChange: function (style, message, dismissAfter) {
+    onStatusChange (style, message, dismissAfter) {
         this.setState({
             style: style,
             message: message,
@@ -33,10 +33,10 @@ var component = React.createClass({
             show: true
         });
     },
-    componentDidMount: function () {
+    componentDidMount () {
         this.listenTo(store, this.onStatusChange);
     },
-    render: function () {
+    render () {
         if (!this.state.show) {
             return <span />;
         }
@@ -49,7 +49,7 @@ var component = React.createClass({
             </div>
         );
     },
-    handleAlertDismiss: function () {
+    handleAlertDismiss () {
         this.setState({show: false});
     }
 });

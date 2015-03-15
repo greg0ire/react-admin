@@ -7,7 +7,7 @@ var Router = require('react-router');
 var cx = React.classSet
 
 module.exports = React.createClass({
-    getDefaultProps: function () {
+    getDefaultProps () {
         return {
             icon: 'fa-exclamation-triangle'
         };
@@ -18,7 +18,7 @@ module.exports = React.createClass({
         icon: React.PropTypes.string,
         id: React.PropTypes.number.isRequired
     },
-    render: function () {
+    render () {
         var klass = 'fa fa-3x pull-left ' + this.props.icon;
 
         return (

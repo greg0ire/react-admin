@@ -3,7 +3,7 @@
 var React = require('react');
 
 var Title = React.createClass({
-    render: function () {
+    render () {
         return (
             <div className="card__title">
                 {this.props.children}

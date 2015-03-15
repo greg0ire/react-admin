@@ -3,7 +3,7 @@
 var React = require('react');
 
 var Information = React.createClass({
-    render: function () {
+    render () {
         return (
             <div className="card__information">
                 {this.props.children}

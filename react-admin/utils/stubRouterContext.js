@@ -28,23 +28,23 @@ var stubRouterContext = function (Component, props, stubs) {
              isActive: func
          },
 
-         getChildContext: function () {
+         getChildContext () {
              return _.merge({}, {
-                 makePath: function () {},
-                 makeHref: function () {},
-                 transitionTo: function () {},
-                 replaceWith: function () {},
-                 goBack: function () {},
-                 getCurrentPath: function () {},
-                 getCurrentRoutes: function () {},
-                 getCurrentPathname: function () {},
-                 getCurrentParams: function () {},
-                 getCurrentQuery: function () {},
-                 isActive: function () {}
+                 makePath () {},
+                 makeHref () {},
+                 transitionTo () {},
+                 replaceWith () {},
+                 goBack () {},
+                 getCurrentPath () {},
+                 getCurrentRoutes () {},
+                 getCurrentPathname () {},
+                 getCurrentParams () {},
+                 getCurrentQuery () {},
+                 isActive () {}
              }, stubs);
          },
 
-         render: function () {
+         render () {
              return <Component {...props} />
          }
      });

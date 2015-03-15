@@ -24,14 +24,14 @@ var BaseTable = {
         per_page: React.PropTypes.number
     },
 
-    getDefaultProps: function () {
+    getDefaultProps () {
         return {
             className: "col-sm-12 col-md-12 main",
             per_page: 32
         }
     },
 
-    getInitialState: function () {
+    getInitialState () {
         return {
             page: 1,
             per_page: this.props.per_page,
@@ -41,14 +41,14 @@ var BaseTable = {
         };
     },
 
-    componentDidMount: function () {
+    componentDidMount () {
         this.refreshGrid();
     },
 
-    refreshGrid: function() {
+    refreshGrid() {
         console.log("You need to implement the refreshGrid method");
     },
-    getFilters: function (extras) {
+    getFilters (extras) {
         var filters = {
             page: 1,
             per_page: 32
@@ -63,7 +63,7 @@ var BaseTable = {
         return filters;
     },
 
-    getPage: function (inc) {
+    getPage (inc) {
         var page = this.getFilters().page + inc;
 
         if (page < 1) {
@@ -73,7 +73,7 @@ var BaseTable = {
         return page;
     },
 
-    renderRow: function (element) {
+    renderRow (element) {
         // this method should be overwritten to create your own rendering element
         return <Card.List>
             <Card.Information >
@@ -90,7 +90,7 @@ var BaseTable = {
         </Card.List>
     },
 
-    render: function () {
+    render () {
         return (
             <div className={this.props.className}>
                 <B.Row>
@@ -121,7 +121,7 @@ function keep(key, obj, def) {
 }
 
 module.exports = {
-    create: function () {
+    create () {
         var klass = _.merge({mixins: []}, BaseTable);
 
         _.forEach(arguments, function (def) {

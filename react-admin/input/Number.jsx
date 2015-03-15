@@ -3,7 +3,7 @@
 var Input = require('./Input.jsx')
 
 var Number = Input.create({
-    updateValue: function (event) {
+    updateValue (event) {
         this.setValue(this.parseInt(event.target.value));
     }
 });

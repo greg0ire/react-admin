@@ -7,11 +7,11 @@ var B = require('react-bootstrap');
 var Boolean = Input.create({
     type: 'checkbox',
 
-    updateValue: function (event) {
+    updateValue (event) {
         this.setValue(event.target.checked);
     },
 
-    render: function () {
+    render () {
         return <B.Input
             checked={this.getValue()}
             default="Default value ..."
