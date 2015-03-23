@@ -2,9 +2,38 @@
 
 var React  = require('react');
 var Router = require('react-router');
+var ReactAdmin = require('react-admin');
 
 var Form = require('./Form.jsx');
 var List = require('./List.jsx');
+
+var NotificationElement = require('component/NotificationElement.jsx');
+
+
+// adding some fake data
+
+var roles = [
+    "EDITOR",
+    "VISITOR",
+    "SUPER_ADMIN"
+];
+
+ReactAdmin.Roles.Add(roles);
+
+// add fake notification
+ReactAdmin.Notification.Action(NotificationElement, {
+    name: "The first notification",
+    action: "create",
+    icon: 'fa-futbol-o fa-spin',
+    id: 1
+});
+
+ReactAdmin.Notification.Action(NotificationElement, {
+    name: "The second notification",
+    action: "update",
+    icon: 'fa-coffee',
+    id: 2
+});
 
 /**
  * This is used to build the nested view required by React Router

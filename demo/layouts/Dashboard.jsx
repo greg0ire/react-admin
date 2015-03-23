@@ -20,8 +20,8 @@ export default React.createClass({
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-12">
-                        <div class="page-header">
-                            <h1>Welcome!</h1>
+                        <div className="page-header">
+                            <h2>Welcome!</h2>
                         </div>
                         <div className="well">
                             This is an interactive demo of the <code>React Admin</code> project.
@@ -32,12 +32,38 @@ export default React.createClass({
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <h2>Features</h2>
+                        <h4>Roles</h4>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <p className="well">
+                            The <code>ReactAdmin.Roles.Has</code> component can be used to render element
+                            if the user has the related roles.
+                        </p>
+                        <B.ButtonGroup>
+                            <B.Button bsStyle="default" onClick={ReactAdmin.Roles.Store.toggleRole.bind(null, "EDITOR")}>Toggle role EDITOR</B.Button>
+                            <B.Button bsStyle="default" onClick={ReactAdmin.Roles.Store.toggleRole.bind(null, "SUPER_ADMIN")}>Toggle role SUPER_ADMIN</B.Button>
+                        </B.ButtonGroup>
+
+                        <ReactAdmin.Roles.Has roles={["SUPER_ADMIN"]} element="div" className="foobar" style={{border: '1px solid black', padding: '5px', margin: '5px'}}>
+                            <span>Only user with SUPER_ADMIN role </span>
+                            <span>can view this message</span>
+                        </ReactAdmin.Roles.Has>
+
+                        <ReactAdmin.Roles.Has roles={["EDITOR"]}>
+                            <div style={{border: '1px solid black', padding: '5px', margin: '5px'}}>Only user with EDITOR role can view this message </div>
+                        </ReactAdmin.Roles.Has>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>Notification</h3>
+                        <h3>Features</h3>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
+                        <h4>Notification</h4>
                     </div>
                 </div>
                 <div className="row">
@@ -53,7 +79,7 @@ export default React.createClass({
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>Status</h3>
+                        <h4>Status</h4>
                     </div>
                 </div>
                 <div className="row">

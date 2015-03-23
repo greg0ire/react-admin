@@ -116,24 +116,6 @@ var routes = (
     </Router.Route>
 );
 
-var NotificationElement = require('component/NotificationElement.jsx');
-
-// add fake notification
-ReactAdmin.Notification.Action(NotificationElement, {
-    name: "The first notification",
-    action: "create",
-    icon: 'fa-futbol-o fa-spin',
-    id: 1
-});
-
-ReactAdmin.Notification.Action(NotificationElement, {
-    name: "The second notification",
-    action: "update",
-    icon: 'fa-coffee',
-    id: 2
-});
-
-
 /**
  * Start the application, the app id is set in the index.html page
  */
