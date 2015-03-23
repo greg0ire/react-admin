@@ -1,5 +1,3 @@
-"use strict";
-
 var SelectInput = require("./input/Select.jsx");
 var RadioInput = require("./input/Radio.jsx");
 var TextInput = require("./input/Text.jsx");
@@ -64,5 +62,13 @@ module.exports = {
         Action: require("./store/Notification.jsx").Action,
         Component: require("./store/Notification.jsx").Component,
         Store: require("./store/Notification.jsx").Store
+    },
+
+    // Roles
+    Roles: {
+        Add: require("./store/Roles.jsx").Add,
+        Replace: require("./store/Roles.jsx").Replace,
+        Store: require("./store/Roles.jsx").Store,
+        Has: require("./store/Roles.jsx").Has
     }
 };
