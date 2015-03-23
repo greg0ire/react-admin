@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react');
 var B = require('react-bootstrap');
 var Reflux = require('reflux');

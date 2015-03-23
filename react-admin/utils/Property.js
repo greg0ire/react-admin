@@ -1,5 +1,3 @@
-'use strict';
-
 export function ReadValue(obj, path, def) {
     for (var i = 0, path = path.split("."), len = path.length; i < len; i++) {
         if (!obj || typeof obj !== "object") {

@@ -1,5 +1,3 @@
-"use strict";
-
 var Url = require("url");
 var Request = require("superagent");
 var _ = require("lodash");
@@ -14,7 +12,7 @@ export default function (baseurl, headers) {
 
         buildRequest(Request('GET', buildUrl(suffix, query)))
             .end(func ? func : defaultHandler);
-    }
+    };
 
     this.del = function () {
         var suffix, query, func;
@@ -22,7 +20,7 @@ export default function (baseurl, headers) {
 
         buildRequest(Request('DELETE', buildUrl(suffix, query)))
             .end(func ? func : defaultHandler);
-    }
+    };
 
     this.post = function () {
         var suffix, query, params, func;
@@ -31,7 +29,7 @@ export default function (baseurl, headers) {
         buildRequest(Request('POST', buildUrl(suffix, query)))
             .send(params)
             .end(func ? func : defaultHandler);
-    }
+    };
 
     this.put = function () {
         var suffix, query, params, func;
@@ -40,7 +38,7 @@ export default function (baseurl, headers) {
         buildRequest(Request('PUT', buildUrl(suffix, query)))
             .send(params)
             .end(func ? func : defaultHandler);
-    }
+    };
 
     function getParameters(args) {
         var suffix = "";

@@ -1,5 +1,3 @@
-'use strict';
-
 var Input = require('./Input.jsx')
 
 export default Input.create({

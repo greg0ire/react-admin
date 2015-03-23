@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  *  This code is an extract of the Input file from react-bootstrap project
  *  It is use to create valid coumpound component with the same layout that a

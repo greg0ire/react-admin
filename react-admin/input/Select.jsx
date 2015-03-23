@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react');
 var Input = require('./Input.jsx')
 var B = require('react-bootstrap');
