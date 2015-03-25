@@ -26,14 +26,14 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "lodash": "~2.4.1",
+    "lodash": "~3.6.0",
     "url": "~0.10.0",
     "superagent": ">=0.21",
     "classnames": "~1.1.4"
   },
   "peerDependencies": {
-    "react": ">=0.12",
-    "react-bootstrap": ">=0.15",
+    "react": ">=0.13",
+    "react-bootstrap": ">=0.19",
     "react-router-bootstrap": ">=0.9"
   },
   "readmeFilename": "README.md",
@@ -71,7 +71,7 @@
     "browserify": "~9.0.3",
     "reactify": "~1.0.0",
     "faker": "~2.1.2",
-    "run-sequence": "~1.0.2",
+    "run-sequence": "~1.0.0",
     "gulp-debug": "~2.0.1",
     "gulp-watch-sequence": "0.0.4",
     "gulp-watch": "~4.1.1",
