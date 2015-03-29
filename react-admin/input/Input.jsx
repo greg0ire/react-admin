@@ -1,6 +1,7 @@
-var React = require('react');
-var B = require('react-bootstrap');
-var _ = require('lodash');
+var React  = require('react');
+var B      = require('react-bootstrap');
+var Roles  = require('../store/Roles.jsx');
+var Create = require('../utils/Create');
 
 var Base = {
     type: 'text',
@@ -18,8 +19,20 @@ var Base = {
         help: React.PropTypes.string,
         label: React.PropTypes.string,
         property: React.PropTypes.string,
-        form: React.PropTypes.object
+        form: React.PropTypes.object,
+        roles: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.array
+        ])
     },
+
+    getInitialState() {
+        // define default values
+        return {
+            show: false
+        };
+    },
+
 
     readValue (obj, path, def) {
         for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
@@ -106,24 +119,21 @@ var Base = {
     },
 
     render () {
-        return <B.Input
-            value={this.getValue()}
-            default="Default value ..."
-            type={this.type}
-            label={this.props.label}
-            help={this.getHelp()}
-            onChange={this.updateValue}
-            bsStyle={this.getStyle()}
-        />
+        return <Roles.Has roles={this.props.roles}>
+            <B.Input
+                value={this.getValue()}
+                default="Default value ..."
+                type={this.type}
+                label={this.props.label}
+                help={this.getHelp()}
+                onChange={this.updateValue}
+                bsStyle={this.getStyle()}
+            />
+        </Roles.Has>
     }
 };
 
+
 export function create() {
-    var klass = _.merge({}, Base);
-
-    _.forEach(arguments, function (def) {
-        klass = _.merge(klass, def);
-    });
-
-    return React.createClass(klass);
-};
+    return Create(Base, arguments);
+}

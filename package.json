@@ -85,6 +85,7 @@
     "node-sass": "~3.0.0-pre"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/jest-setup.js",
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "testFileExtensions": [
       "es6",

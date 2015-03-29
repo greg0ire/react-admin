@@ -1,6 +1,7 @@
 var React = require('react');
 var Input = require('./Input.jsx')
 var B = require('react-bootstrap');
+var Roles = require('../store/Roles.jsx');
 
 var BaseRadio = {
     type: 'radio',
@@ -9,17 +10,19 @@ var BaseRadio = {
     },
 
     render () {
-        return <B.Input
-            name={this.props.name}
-            checked={this.isChecked()}
-            default="Default value ..."
-            type={this.type}
-            value={this.props.value}
-            label={this.props.label}
-            help={this.getHelp()}
-            onChange={this.updateValue}
-            bsStyle={this.getStyle()}
-        />
+        return <Roles.Has roles={this.props.roles}>
+            <B.Input
+                name={this.props.name}
+                checked={this.isChecked()}
+                default="Default value ..."
+                type={this.type}
+                value={this.props.value}
+                label={this.props.label}
+                help={this.getHelp()}
+                onChange={this.updateValue}
+                bsStyle={this.getStyle()}
+            />
+        </Roles.Has>
     }
 };
 

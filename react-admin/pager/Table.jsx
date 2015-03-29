@@ -1,7 +1,6 @@
 var React = require('react');
 var B = require('react-bootstrap');
 var Router = require('react-router');
-var RB = require('react-router-bootstrap');
 
 var Card = {
     List: require('../card/List.jsx'),
@@ -9,6 +8,8 @@ var Card = {
     Information: require('../card/Information.jsx'),
     Notification: require('../card/Notification.jsx')
 };
+
+var Create = require('../utils/Create');
 
 var _ = require('lodash');
 var Url = require('url');
@@ -110,27 +111,7 @@ var BaseTable = {
     }
 };
 
-function keep(key, obj, def) {
-    if (key in def) {
-        for (var m in def[key]) {
-            obj[key].push(def[key][m]);
-        }
-
-        delete def[key];
-    }
-}
 
 export function create() {
-    var klass = _.merge({mixins: []}, BaseTable);
-
-    _.forEach(arguments, function (def) {
-        keep('mixins', klass, def);
-        keep('propTypes', klass, def);
-        keep('contextTypes', klass, def);
-
-        klass = _.merge(klass, def);
-    });
-
-    return React.createClass(klass);
+    return Create(BaseTable, arguments);
 }
-

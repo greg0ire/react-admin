@@ -17,6 +17,7 @@ export var objectsStore = reflux.createStore({
                count: faker.helpers.randomNumber(100),
                status: faker.helpers.randomNumber(3),
                enabled: faker.helpers.randomNumber(1) == 1,
+               superAdmin: faker.helpers.randomNumber(1) == 1,
                id:  i
            };
        }

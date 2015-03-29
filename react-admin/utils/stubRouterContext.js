@@ -10,42 +10,36 @@
 var React = require('react');
 var _ = require('lodash');
 
-var func = React.PropTypes.func;
+export default (Component, props, stubs) => {
+    function RouterStub() {}
 
-export default function(Component, props, stubs) {
+    RouterStub = _.merge(RouterStub, {
+        makePath () {},
+        makeHref () {},
+        transitionTo () {},
+        replaceWith () {},
+        goBack () {},
+        getCurrentPath () {},
+        getCurrentRoutes () {},
+        getCurrentPathname () {},
+        getCurrentParams () {},
+        getCurrentQuery () {},
+        isActive () {}
+    }, stubs);
+
     return React.createClass({
         childContextTypes: {
-            makePath: func,
-            makeHref: func,
-            transitionTo: func,
-            replaceWith: func,
-            goBack: func,
-            getCurrentPath: func,
-            getCurrentRoutes: func,
-            getCurrentPathname: func,
-            getCurrentParams: func,
-            getCurrentQuery: func,
-            isActive: func
+            router: React.PropTypes.func
         },
 
-        getChildContext() {
-            return _.merge({}, {
-                makePath() {},
-                makeHref() {},
-                transitionTo() {},
-                replaceWith() {},
-                goBack() {},
-                getCurrentPath() {},
-                getCurrentRoutes() {},
-                getCurrentPathname() {},
-                getCurrentParams() {},
-                getCurrentQuery() {},
-                isActive() {}
-            }, stubs);
+        getChildContext () {
+            return {
+                router: RouterStub
+            };
         },
 
-        render() {
+        render () {
             return <Component {...props} />
         }
     });
-}
+};

@@ -1,5 +1,6 @@
 jest.dontMock('../Boolean.jsx');
 jest.dontMock('lodash');
+jest.dontMock('../../utils/Create');
 
 describe('BooleanInput', function () {
     it('render bool input', function () {

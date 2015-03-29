@@ -1,5 +1,6 @@
 jest.dontMock('../Text.jsx');
 jest.dontMock('lodash');
+jest.dontMock('../../utils/Create');
 
 describe('TextInput', function () {
     it('render text input', function () {

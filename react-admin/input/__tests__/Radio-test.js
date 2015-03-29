@@ -1,5 +1,6 @@
 jest.dontMock('../Radio.jsx');
 jest.dontMock('lodash');
+jest.dontMock('../../utils/Create');
 
 describe('SelectInput', function () {
     it('render number input', function () {

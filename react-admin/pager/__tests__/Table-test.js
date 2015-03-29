@@ -2,6 +2,7 @@ jest.dontMock('../Table.jsx');
 jest.dontMock('lodash');
 jest.dontMock('react-router-bootstrap');
 jest.dontMock('../../utils/stubRouterContext');
+jest.dontMock('../../utils/Create');
 
 describe('Table test', () => {
     it('render table', () => {

@@ -2,20 +2,24 @@ var React = require('react');
 var Input = require('./Input.jsx')
 var B = require('react-bootstrap');
 
+var Roles = require('../store/Roles.jsx');
+
 var BaseSelect = {
     type: 'select',
     render () {
-        return <B.Input
-            value={this.getValue()}
-            default="Default value ..."
-            type={this.type}
-            label={this.props.label}
-            help={this.getHelp()}
-            onChange={this.updateValue}
-            bsStyle={this.getStyle()}
-        >
-            {this.props.children}
-        </B.Input>
+        return <Roles.Has roles={this.props.roles}>
+            <B.Input
+                value={this.getValue()}
+                default="Default value ..."
+                type={this.type}
+                label={this.props.label}
+                help={this.getHelp()}
+                onChange={this.updateValue}
+                bsStyle={this.getStyle()}
+            >
+                {this.props.children}
+            </B.Input>
+        </Roles.Has>
     }
 };
 
@@ -33,15 +37,17 @@ export var BooleanSelect = Input.create(BaseSelect, {
     },
 
     render () {
-        return <B.Input
-            value={this.getValue() ? '1' : '0'}
-            type={this.type}
-            label={this.props.label}
-            help={this.getHelp()}
-            onChange={this.updateValue}
-            bsStyle={this.getStyle()}
-        >
-             {this.props.children}
-        </B.Input>
+        return <Roles.Has roles={this.props.roles}>
+            <B.Input
+                value={this.getValue() ? '1' : '0'}
+                type={this.type}
+                label={this.props.label}
+                help={this.getHelp()}
+                onChange={this.updateValue}
+                bsStyle={this.getStyle()}
+            >
+                 {this.props.children}
+            </B.Input>
+        </Roles.Has>
     }
 });

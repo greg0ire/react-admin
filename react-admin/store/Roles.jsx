@@ -1,5 +1,5 @@
-var React = require('react');
-var B = require('react-bootstrap');
+var React  = require('react');
+var B      = require('react-bootstrap');
 var Reflux = require('reflux');
 
 export var Add = Reflux.createAction();
@@ -20,6 +20,18 @@ export var Store = Reflux.createStore({
         this.trigger.apply(this, this.roles);
     },
     hasRole (roles) {
+        if (arguments.length == 0 || typeof roles == 'undefined') {
+            return true;
+        }
+
+        if (typeof roles == "string") {
+            roles = [roles];
+        }
+
+        if (roles.length == 0) {
+            return true;
+        }
+
         var has = false;
 
         for (var key in roles) {
@@ -92,15 +104,8 @@ export var Has = React.createClass({
     },
 
     onRolesChange () {
-        var roles = [];
-        if (typeof this.props.roles == "string") {
-            roles.append(this.props.roles);
-        } else {
-            roles = this.props.roles;
-        }
-
         this.setState({
-            show: Store.hasRole(roles)
+            show: Store.hasRole(this.props.roles)
         });
     },
 

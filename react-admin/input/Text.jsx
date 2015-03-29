@@ -3,6 +3,7 @@ var B = require('react-bootstrap');
 
 var Input = require('./Input.jsx');
 var ReactBootstrapMixin = require('./ReactBootstrap.jsx');
+var Roles = require('../store/Roles.jsx');
 
 export var Text = Input.create({
     type: 'text'

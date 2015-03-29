@@ -95,9 +95,15 @@ export default React.createClass({
                             <ReactAdmin.TextInput form={this} property="object.name" label="Name" help="The name"/>
 
                             <ReactAdmin.TextAreaInput form={this} property="object.bio" label="Biography" />
+
+                            <ReactAdmin.TextInput form={this} property="object.account" label="account" help="Account reference"/>
                         </div>
                         <div className="col-sm-6">
-                            <ReactAdmin.TextInput form={this} property="object.account" label="account" help="Account reference"/>
+
+                            <ReactAdmin.BooleanSelect form={this} property="object.superAdmin" label="Is Super Admin" roles={["SUPER_ADMIN"]}>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </ReactAdmin.BooleanSelect>
 
                             <ReactAdmin.BooleanSelect form={this} property="object.enabled" label="enabled">
                                 <option value="1">Yes</option>

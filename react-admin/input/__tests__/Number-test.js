@@ -1,5 +1,6 @@
 jest.dontMock('../Number.jsx');
 jest.dontMock('lodash');
+jest.dontMock('../../utils/Create');
 
 describe('NumberInput', function () {
     it('render number input', function () {
