@@ -14,12 +14,13 @@ var _ = require('lodash');
 var Url = require('url');
 
 var BaseTable = {
-    mixins: [Router.State],
-
     propTypes: {
         index: React.PropTypes.string.isRequired,
         className: React.PropTypes.string,
         per_page: React.PropTypes.number
+    },
+    contextTypes: {
+      router: React.PropTypes.func
     },
 
     getDefaultProps () {
@@ -53,7 +54,7 @@ var BaseTable = {
             per_page: 32
         };
 
-        filters = _.assign(filters, this.getQuery());
+        filters = _.assign(filters, this.context.router.getCurrentParams());
         filters = _.assign(filters, extras || {});
 
         filters.page = parseInt(filters.page, 10);
@@ -125,6 +126,7 @@ export function create() {
     _.forEach(arguments, function (def) {
         keep('mixins', klass, def);
         keep('propTypes', klass, def);
+        keep('contextTypes', klass, def);
 
         klass = _.merge(klass, def);
     });

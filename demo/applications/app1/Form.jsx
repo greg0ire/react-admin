@@ -13,7 +13,11 @@ var Store = require('./Store.jsx');
 var NotificationElement = require('component/NotificationElement.jsx');
 
 export default React.createClass({
-    mixins: [Router.State, Reflux.ListenerMixin],
+    mixins: [Reflux.ListenerMixin],
+
+    contextTypes: {
+      router: React.PropTypes.func
+    },
 
     getInitialState() {
         // define default values
@@ -31,7 +35,7 @@ export default React.createClass({
 
     refreshView() {
         this.setState({
-            object: Store.objectsStore.objects[this.getParams().id]
+            object: Store.objectsStore.objects[this.context.router.getCurrentParams().id]
         });
     },
 
@@ -71,7 +75,7 @@ export default React.createClass({
 
     loadData() {
         this.setState({
-            object: Store.objectsStore.objects[this.getParams().id]
+            object: Store.objectsStore.objects[this.context.router.getCurrentParams().id]
         });
     },
 

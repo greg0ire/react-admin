@@ -119,4 +119,6 @@ var routes = (
 /**
  * Start the application, the app id is set in the index.html page
  */
-Router.run(routes, Handler => React.render(<Handler/>, document.getElementById("app")));
+Router.run(routes, (Handler, state) => {
+    React.render(<Handler {...state}/>, document.getElementById("app"));
+});

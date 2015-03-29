@@ -40,7 +40,7 @@ ReactAdmin.Notification.Action(NotificationElement, {
  */
 var View = React.createClass({
     render() {
-        return <Router.RouteHandler />
+        return <Router.RouteHandler {...this.props} />
     }
 });
 

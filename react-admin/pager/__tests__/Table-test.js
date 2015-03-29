@@ -19,7 +19,7 @@ describe('Table test', () => {
 
         var B = require('react-bootstrap');
 
-        // Verify that it's Off by default
+//         Verify that it's Off by default
 //        var widget = TestUtils.findRenderedComponentWithType(Input, B.Input);
     });
 
@@ -28,7 +28,7 @@ describe('Table test', () => {
         var TableFactory = require('../Table.jsx').create;
         var TestUtils = React.addons.TestUtils;
         var stubRouterContext = require('../../utils/stubRouterContext');
-
+//
         var Table = stubRouterContext(TableFactory({mixins: [{foo: () => {}}]}, {mixins: [{bar: () => {}}]}));
 
         // need to find a way to check if the foo / bar mixins are available...
