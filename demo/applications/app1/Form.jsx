@@ -122,6 +122,7 @@ export default React.createClass({
                 </form>
 
                 <B.Button bsStyle="primary" onClick={this.submit}>Save</B.Button>
+                <B.Button bsStyle="link" onClick={ReactAdmin.Roles.Store.toggleRole.bind(null, "SUPER_ADMIN")}>Toggle role SUPER_ADMIN</B.Button>
             </div>
         );
     }
