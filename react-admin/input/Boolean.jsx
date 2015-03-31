@@ -9,19 +9,5 @@ export default Input.create({
 
     updateValue (event) {
         this.setValue(event.target.checked);
-    },
-
-    render () {
-        return <Roles.Has roles={this.props.roles}>
-            <B.Input
-                checked={this.getValue()}
-                default="Default value ..."
-                type={this.type}
-                label={this.props.label}
-                help={this.getHelp()}
-                onChange={this.updateValue}
-                bsStyle={this.getErrors().length > 0 ? 'error' : null}
-            />
-        </Roles.Has>
     }
 });
