@@ -22,14 +22,6 @@ The project comes with a set of widget with auto-mapping to the related data str
 </ReactAdmin.BooleanSelect>
 ```
 
-    NumberSelect: SelectInput.NumberSelect,
-    Select: SelectInput.Select,
-    BooleanSelect: SelectInput.BooleanSelect,
-
-    NumberRadio: RadioInput.NumberRadio,
-    BooleanRadio: RadioInput.BooleanRadio,
-    Radio: RadioInput.Radio,
-
 ### Text
 
 ``ReactAdmin.TextInput``: Render a ``input`` field to edit a text value.
