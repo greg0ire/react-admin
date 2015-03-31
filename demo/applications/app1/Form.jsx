@@ -105,10 +105,8 @@ export default React.createClass({
                                 <option value="0">No</option>
                             </ReactAdmin.BooleanSelect>
 
-                            <ReactAdmin.BooleanSelect form={this} property="object.enabled" label="enabled">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </ReactAdmin.BooleanSelect>
+                            <ReactAdmin.BooleanRadio form={this} value={1} property="object.enabled" label="Enabled" />
+                            <ReactAdmin.BooleanRadio form={this} value="0" property="object.enabled" label="Disabled" />
 
                             <ReactAdmin.NumberSelect form={this} property="object.status" label="Status">
                                 <option value="0">New</option>
