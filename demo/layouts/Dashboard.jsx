@@ -32,6 +32,11 @@ export default React.createClass({
                 </div>
                 <div className="row">
                     <div className="col-md-12">
+                        <h3>Features</h3>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
                         <h4>Roles</h4>
                     </div>
                 </div>
@@ -54,11 +59,6 @@ export default React.createClass({
                         <ReactAdmin.Roles.Has roles={["EDITOR"]}>
                             <div style={{border: '1px solid black', padding: '5px', margin: '5px'}}>Only user with EDITOR role can view this message </div>
                         </ReactAdmin.Roles.Has>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <h3>Features</h3>
                     </div>
                 </div>
                 <div className="row">
