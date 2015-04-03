@@ -2,6 +2,7 @@ var React  = require('react');
 var B      = require('react-bootstrap');
 var Roles  = require('../store/Roles.jsx');
 var Create = require('../utils/Create');
+var _      = require('lodash');
 
 var Base = {
     type: 'text',
