@@ -18,7 +18,8 @@ var BaseTable = {
     propTypes: {
         index: React.PropTypes.string.isRequired,
         className: React.PropTypes.string,
-        per_page: React.PropTypes.number
+        per_page: React.PropTypes.number,
+        show_filters: React.PropTypes.bool
     },
     contextTypes: {
       router: React.PropTypes.func
@@ -27,7 +28,8 @@ var BaseTable = {
     getDefaultProps () {
         return {
             className: "col-sm-12 col-md-12 main",
-            per_page: 32
+            per_page: 32,
+            show_filters: true
         }
     },
 
@@ -83,7 +85,8 @@ var BaseTable = {
 
             <Card.Icon type="circle-thin" />
 
-            A message you can use
+            You should overwrite the <code>renderRow</code> method to create your own card/row.
+            You can also refer to the <a href="https://github.com/rande/react-admin/blob/master/docs/components/Card.md" target="_blank">related documentation</a>.
 
             <Card.Notification>
                 The notification card
@@ -91,9 +94,26 @@ var BaseTable = {
         </Card.List>
     },
 
+    renderFilters () {
+        return <B.Row>
+            <div className="col-sm-12">
+                You should overwrite the <code>renderFilters</code> method to add your filters or return null if
+                done is required. <br />You can also refer to the <a href="https://github.com/rande/react-admin/blob/master/docs/components/Filters.md" target="_blank">related documentation</a>.
+            </div>
+        </B.Row>
+    },
+
     render () {
+        var filters = null;
+
+        if (this.props.show_filters) {
+            filters = this.renderFilters()
+        }
+
         return (
             <div className={this.props.className}>
+                {filters}
+
                 <B.Row>
                     {_.map(this.state.elements, this.renderRow, this)}
                 </B.Row>
