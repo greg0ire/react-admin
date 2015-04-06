@@ -35,7 +35,7 @@ export default React.createClass({
 
     refreshView() {
         this.setState({
-            object: Store.objectsStore.objects[this.context.router.getCurrentParams().id]
+            object: Store.objectsStore.objects.get(parseInt(this.context.router.getCurrentParams().id, 10))
         });
     },
 
@@ -74,8 +74,9 @@ export default React.createClass({
     },
 
     loadData() {
+
         this.setState({
-            object: Store.objectsStore.objects[this.context.router.getCurrentParams().id]
+            object: Store.objectsStore.objects.get(parseInt(this.context.router.getCurrentParams().id, 10))
         });
     },
 
@@ -120,7 +121,10 @@ export default React.createClass({
                 </form>
 
                 <B.Button bsStyle="primary" onClick={this.submit}>Save</B.Button>
+                <Router.Link to="app1.list">Return list</Router.Link>
+
                 <B.Button bsStyle="link" onClick={ReactAdmin.Roles.Store.toggleRole.bind(null, "SUPER_ADMIN")}>Toggle role SUPER_ADMIN</B.Button>
+
             </div>
         );
     }

@@ -12,12 +12,20 @@ var faker = require('faker');
 var Store = require('./Store.jsx');
 
 export default ReactAdmin.createTable({
+    getInitialState() {
+        // define default values
+        return {
+            filters: {name: ""},
+            errors: {}
+        };
+    },
     mixins: [Reflux.ListenerMixin],
     getDefaultProps() {
         return {
-            className: "col-sm-12 col-md-12 main",
-            per_page:  32,
-            index:     "app1.list"
+            className:    "col-sm-12 col-md-12 main",
+            per_page:     32,
+            index:        "app1.list",
+            show_filters: true
         }
     },
 
@@ -28,21 +36,50 @@ export default ReactAdmin.createTable({
             this.refreshGrid({});
         });
     },
+
     refreshGrid(filters) {
         var filters = this.getFilters(filters);
+        var filteredElements = [];
+        var elements = [];
 
-        var elements = []
+        // in a normal case, you will probably call a webservice to retrieve elements
+        Store.objectsStore.objects.forEach((v, i) => {
+            if (this.state.filters.name.length == 0 || v.name.toLowerCase().indexOf(this.state.filters.name.toLowerCase()) > -1) {
+                filteredElements.push(v);
+            }
+        })
 
         for(var i = ((filters.page - 1) * filters.per_page); i < ((filters.page) * filters.per_page); i++ ) {
-            elements.push(Store.objectsStore.objects[i])
+            if (filteredElements[i]) {
+                elements.push(filteredElements[i])
+            }
         }
 
         this.setState({
             page: filters.page,
             per_page: filters.per_page,
-            base_query: {},
             elements: elements
         });
+    },
+
+    refreshView() {
+        this.setState({
+            filters: this.state.filters
+        })
+    },
+
+    renderFilters() {
+        return <B.Row>
+            <div className="col-sm-4">
+                <ReactAdmin.TextInput form={this} property="filters.name" addonBefore="Name"/>
+            </div>
+            <div className="col-sm-4">
+
+            </div>
+            <div className="col-sm-4">
+                <B.Button bsStyle="primary" onClick={this.refreshGrid}>Search</B.Button>
+            </div>
+        </B.Row>
     },
 
     renderRow(data) {
@@ -55,7 +92,7 @@ export default ReactAdmin.createTable({
             </ReactAdmin.Card.Notification>
 
             <ReactAdmin.Card.Title>
-                {data.name}
+                <Router.Link to="app1.edit" params={{id: data.id}}>{data.name}</Router.Link>
             </ReactAdmin.Card.Title>
 
             <ReactAdmin.Card.Content>

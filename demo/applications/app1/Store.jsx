@@ -7,9 +7,9 @@ export var saveAction = reflux.createAction();
 
 export var objectsStore = reflux.createStore({
    init() {
-       this.objects = {};
+       this.objects = new Map();
        for (var i = 0; i < 256; i++) {
-           this.objects[i] = {
+           this.objects.set(i, {
                name: faker.name.findName(),
                avatar: faker.internet.avatar(),
                bio: faker.hacker.phrase(),
@@ -19,7 +19,7 @@ export var objectsStore = reflux.createStore({
                enabled: faker.helpers.randomNumber(1) == 1,
                superAdmin: faker.helpers.randomNumber(1) == 1,
                id:  i
-           };
+           });
        }
 
        this.listenTo(saveAction, () => {
