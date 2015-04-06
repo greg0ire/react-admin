@@ -1,119 +1,118 @@
 From
 ====
 
-Form definition
+A form is a default ``ReactJS`` component. A form component should defined some default functions. Those functions are not linked to ``react-admin`` but required by ``ReactJS`` it self.
+
+
+getInitialState
 ---------------
 
-TODO
+The method should return the default value used by React while the form is initialized.
 
-Form Widgets
-------------
-
-The project comes with a set of widget with auto-mapping to the related data structure. Each widget must have a ``form`` field and a ``property`` field defined, the widget also accept a ``label`` and a ``roles`` field. The latter can be used to hide or show a field from the form, please refer to the [Roles documentation](Roles.md). 
-
-```jsx
-<ReactAdmin.BooleanSelect 
-    form={this} 
-    property="object.superAdmin" 
-    label="Is Super Admin" 
-    roles={["SUPER_ADMIN"]}>
-    <option value="1">Yes</option>
-    <option value="0">No</option>
-</ReactAdmin.BooleanSelect>
+```js
+getInitialState() {
+    // define default values
+    return {
+        object: {
+            name: "loading node ..."
+        },
+        errors: {}
+    };
+},
 ```
 
-### Text
+The ``object`` key is not mandatory and can be named with any name you like. However the ``errors`` keys is used by the different inputs to render errors. 
 
-``ReactAdmin.TextInput``: Render a ``input`` field to edit a text value.
 
-```jsx
-<ReactAdmin.TextInput form={this} property="object.field" />
+componentDidMount & componentWillReceiveProps
+---------------------------------------------
+
+This methods will be used to load the data related to the form when the application or the component is ready. 
+
+```js
+componentDidMount() {
+    this.loadData();
+},
+
+componentWillReceiveProps() {
+    this.loadData();
+},
+
+loadData() {
+
+    this.setState({
+        object: {} // code to load the object 
+    });
+},
+
 ```
 
-``ReactAdmin.TextAreaInput``: Render a ``textarea`` field to edit a text value.
+render
+------
 
-```jsx
-<ReactAdmin.TextAreaInput form={this} property="object.field" />
+Like any ReactJS component, the render method is mandatory. The method must return a set of element to render. React-Admin provides a set of widget used to update the object ``property`` provided related to the ``form`` attribute. You can access to the complete list of widgets from the [related documentations](Form_Widgets.md).
+
+```js
+render() {
+    return (
+        <div className="col-sm-12 col-md-12 main">
+            <h2 className="sub-header">Edit {this.state.object.name} </h2>
+
+            <ReactAdmin.TextInput form={this} property="object.name" label="Name" help="The name"/>
+
+            <ReactAdmin.TextAreaInput form={this} property="object.bio" label="Biography" />
+
+            <B.Button bsStyle="primary" onClick={this.submit}>Save</B.Button>
+        </div>
+    );
+}
 ```
 
-``ReactAdmin.Password``: Render a ``password`` field to edit a text value.
+submit
+------
 
-```jsx
-<ReactAdmin.Password form={this} property="object.field" />
+The ``submit`` is a convenient name, but again name it as you want. Just make sure the ``save`` button is bound to the correct callback. The ``submit`` action is the place where you can put front validation and server communication to validate the data on a remote service. 
+
+```js
+submit() {
+    // local validation
+    var errors = {};
+    if (this.state.object.name.length == 0) {
+        errors['object.name'] = ["Name cannot be emtpy"];
+    }
+    
+    // post the data to the remote server
+    //  do the work ;)
+
+    if (Object.keys(errors).length > 0) {
+        ReactAdmin.Status.Action('danger', "Errors occurs while saving", 4000);
+    } else {
+        ReactAdmin.Status.Action('success', "The object has been saved", 2000);
+
+        ReactAdmin.Notification.Action(NotificationElement, {
+            name: this.state.object.name,
+            action: "Save",
+            id: this.state.object.id
+        });
+    }
+
+    this.setState({
+        'errors': errors
+    });
+},
 ```
 
-``ReactAdmin.Number``: Render an ``input`` field to edit a number.
+refreshView
+-----------
 
-```jsx
-<ReactAdmin.Number form={this} property="object.field" />
+It is the only required method, it is used to refresh the form view. It is call by input when the related object is updated.
+
+```js
+refreshView() {
+    this.setState({
+        object: this.state.object
+    });
+},
 ```
 
-``ReactAdmin.Boolean``: Render a ``input`` field to edit a boolean value.
-
-```jsx
-<ReactAdmin.Boolean form={this} property="object.field" />
-```
-
-### Radio
-
-   
-``ReactAdmin.Radio``: Render an ``input radio`` field to set a string value 
-
-```jsx
-<ReactAdmin.Radio form={this} value="the value" label="1 is a value" property="object.field" />
-<ReactAdmin.Radio form={this} value="another value" label="2 is another one" property="object.field" />
-```
-
-``ReactAdmin.NumberRadio``: Render an ``input radio`` field to set a number 
-
-```jsx
-<ReactAdmin.NumberRadio form={this} value={1} label="1 is a value" property="object.field" />
-<ReactAdmin.NumberRadio form={this} value={2} label="2 is another one" property="object.field" />
-```
-
-``ReactAdmin.BooleanRadio``: Render an ``input radio`` field to set a boolean 
-
-```jsx
-<ReactAdmin.BooleanRadio form={this} value={0} label="yes" property="object.field" />
-<ReactAdmin.BooleanRadio form={this} value={1} label="no" property="object.field" />
-```
-
-### Select
-
-``ReactAdmin.Select``: Render a ``select`` to choice a value from a provider list.
-
-```jsx
-<ReactAdmin.Select form={this} property="object.field" label="Status">
-    <option value="0">New</option>
-    <option value="1">Draft</option>
-    <option value="2">Completed</option>
-    <option value="3">Validated</option>
-</ReactAdmin.Select>
-```
-
-``ReactAdmin.NumberSelect``: Render a ``select`` to choice a number from a provider list.
-
-```jsx
-<ReactAdmin.NumberSelect form={this} property="object.field" label="Status">
-    <option value="0">New</option>
-    <option value="1">Draft</option>
-    <option value="2">Completed</option>
-    <option value="3">Validated</option>
-</ReactAdmin.NumberSelect>
-```
-
-
-``ReactAdmin.BooleanSelect``: Render a ``select`` to choice a boolean form a provided list.
-
-```jsx
-<ReactAdmin.BooleanSelect form={this} property="object.field" label="Status">
-    <option value="0">New</option>
-    <option value="1">Draft</option>
-</ReactAdmin.BooleanSelect>
-```
-
-### ReactBootstrap Mixin
-// TODO
-
-### Create a custom field
-// TODO
+This might look weird at first, but it forces React to refresh the view.
