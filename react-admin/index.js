@@ -50,6 +50,16 @@ module.exports = {
         Title: require("./card/Title.jsx")
     },
 
+    // Sidebar
+    Sidebar: {
+        Component: require("./store/Sidebar.jsx").Component,
+    },
+
+    // Clock
+    Clock: {
+        Component: require("./store/Clock.jsx").Component,
+    },
+
     // Status
     Status: {
         Action: require("./store/Status.jsx").Action,

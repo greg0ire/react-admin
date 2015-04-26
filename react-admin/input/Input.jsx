@@ -104,7 +104,7 @@ var Base = {
     },
 
     setValue (value) {
-        this.writeValue(this.props.form.state, this.props.property, value)
+        this.writeValue(this.props.form.state, this.props.property, value);
 
         this.props.form.refreshView();
     },

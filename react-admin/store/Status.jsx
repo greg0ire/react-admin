@@ -42,7 +42,7 @@ export var Component = React.createClass({
         return (
             <div className="react-app-status">
                 <B.Alert bsStyle={this.state.style} onDismiss={this.handleAlertDismiss} dismissAfter={this.state.dismissAfter}>
-              {this.state.message}
+                    {this.state.message}
                 </B.Alert>
             </div>
         );
