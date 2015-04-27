@@ -4,10 +4,19 @@ div.react-app-sidebar {
     top: 50px;
     bottom: 0;
     right: 0;
+    width: 300px;
     z-index: 1000;
     display: block;
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto;
     background-color: #222222;
+}
+
+div.react-app-sidebar.show {
+    display: block;
+}
+
+div.react-app-sidebar.hide {
+    display: none;
 }

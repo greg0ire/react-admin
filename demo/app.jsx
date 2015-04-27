@@ -20,32 +20,33 @@ var App = React.createClass({
     mixins: [Reflux.ListenerMixin],
     getInitialState() {
         return {
-           show: false,
            countNotification: 0,
            apps: []
         };
     },
+
     componentDidMount() {
-        this.listenTo(ReactAdmin.Notification.Store, this.onNotification);
-    },
-    onNotification(notification) {
-        this.setState({
-            countNotification: this.state.countNotification + 1
+        this.listenTo(ReactAdmin.Notification.Store, (notification) => {
+            this.setState({
+                countNotification: this.state.countNotification + 1
+            });
         });
+
+        this.listenTo(ReactAdmin.Sidebar.Store, (show) => {
+            this.setState({
+                countNotification: !show ? 0 : this.state.countNotification
+            });
+        })
     },
+
     toggleSidebar(event) {
-        this.setState({
-            show: !this.state.show,
-            countNotification: !this.state.showNotification ? 0 : this.state.countNotification
-        });
+        ReactAdmin.Sidebar.ToggleAction();
 
         event.stopPropagation();
         event.preventDefault();
     },
-    render() {
-        var leftColumn = this.state.show ? "col-md-9" : "col-md-12";
-        var rightColumn = this.state.show ? "col-md-3" : "hide";
 
+    render() {
         var classes = classNames({
             'label label-danger': true,
             'hide': this.state.countNotification == 0
@@ -63,21 +64,17 @@ var App = React.createClass({
                         </B.NavItem>
                     </B.Nav>
                 </B.Navbar>
+
+                <ReactAdmin.Sidebar.Component>
+                    <ReactAdmin.Clock.Component />
+                    <hr />
+                    <ReactAdmin.Notification.Component />
+                </ReactAdmin.Sidebar.Component>
+
                 <div className="container-fluid">
                     <ReactAdmin.Status.Component />
                     <div className="row">
-                        <div className={leftColumn}>
-                            <div className="row">
-                                <Router.RouteHandler />
-                            </div>
-                        </div>
-                        <div className={rightColumn}>
-                            <ReactAdmin.Sidebar.Component>
-                                <ReactAdmin.Clock.Component />
-                                <hr />
-                                <ReactAdmin.Notification.Component />
-                            </ReactAdmin.Sidebar.Component>
-                        </div>
+                        <Router.RouteHandler />
                     </div>
                 </div>
             </div>

@@ -53,11 +53,13 @@ module.exports = {
     // Sidebar
     Sidebar: {
         Component: require("./store/Sidebar.jsx").Component,
+        ToggleAction: require("./store/Sidebar.jsx").ToggleAction,
+        Store: require("./store/Sidebar.jsx").Store
     },
 
     // Clock
     Clock: {
-        Component: require("./store/Clock.jsx").Component,
+        Component: require("./store/Clock.jsx").Component
     },
 
     // Status
