@@ -25,9 +25,9 @@
         background-color: #E6E9ED;
     }
 
-    /*
-        A visual representation of the element
-    */
+    /**
+     *    A visual representation of the element
+     */
     &__icon {
         margin-top: -6px;
         min-height: 70px;
@@ -101,7 +101,6 @@
     &__title {
         font-weight: bold;
     }
-
 }
 
 .card-user {

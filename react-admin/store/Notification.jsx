@@ -7,7 +7,7 @@ export var Action = Reflux.createAction();
 
 export var Store = Reflux.createStore({
     init () {
-        this.history = []
+        this.history = [];
         this.listenTo(Action, this.addNotification);
     },
     addNotification (component, props) {
