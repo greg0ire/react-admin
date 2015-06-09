@@ -4,8 +4,10 @@ node_js:
   - 0.10
   - 0.12
 
+matrix:
+  allow_failures:
+    - node_js: 0.12
+
 script:
-  - npm install -g bower
   - bower install
-  - npm install -fg styledocco
   - make test

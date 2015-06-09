@@ -7,6 +7,8 @@ test:
 	npm test
 
 install:
+	npm install -g bower
+	npm install -fg styledocco
 	npm install
 	bower install
 
