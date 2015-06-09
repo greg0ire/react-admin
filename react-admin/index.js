@@ -2,6 +2,28 @@ var SelectInput = require("./input/Select.jsx");
 var RadioInput = require("./input/Radio.jsx");
 var TextInput = require("./input/Text.jsx");
 
+// http://formatjs.io/guides/runtime-environments/#polyfill-node
+
+var areIntlLocalesSupported = require('intl-locales-supported');
+
+var localesMyAppSupports = [
+    "en"
+];
+
+if (global.Intl) {
+    // Determine if the built-in `Intl` has the locale data we need.
+    if (!areIntlLocalesSupported(localesMyAppSupports)) {
+        // `Intl` exists, but it doesn't have the data we need, so load the
+        // polyfill and replace the constructors with need with the polyfill's.
+        require('intl');
+        Intl.NumberFormat   = IntlPolyfill.NumberFormat;
+        Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+    }
+} else {
+    // No `Intl`, so use and load the polyfill.
+    global.Intl = require('intl');
+}
+
 module.exports = {
     // card used in list
     IconCard: require("./card/Icon.jsx"),

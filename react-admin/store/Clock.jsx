@@ -2,7 +2,8 @@ var React = require('react');
 var B = require('react-bootstrap');
 var Reflux = require('reflux');
 
-var Intl     = require('react-intl');
+
+var ReactIntl     = require('react-intl');
 
 export var Store = Reflux.createStore({
     init () {
@@ -17,7 +18,7 @@ export var Store = Reflux.createStore({
 });
 
 export var Component = React.createClass({
-    mixins: [Reflux.ListenerMixin, Intl.IntlMixin],
+    mixins: [Reflux.ListenerMixin, ReactIntl.IntlMixin],
     getInitialState () {
         return {
             date: new Date()
@@ -34,13 +35,13 @@ export var Component = React.createClass({
     render () {
         return (
             <div className="react-app-clock">
-                <Intl.FormattedDate
+                <ReactIntl.FormattedDate
                     value={this.state.date}
                     day="numeric"
                     month="long"
                     year="numeric" />
                 <br />
-                <Intl.FormattedTime
+                <ReactIntl.FormattedTime
                     value={this.state.date}
                     hour="numeric"
                     minute="numeric" />
