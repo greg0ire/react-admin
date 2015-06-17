@@ -57,7 +57,7 @@ var BaseTable = {
             per_page: 32
         };
 
-        filters = _.assign(filters, this.context.router.getCurrentParams());
+        filters = _.assign(filters, this.context.router.getCurrentQuery());
         filters = _.assign(filters, extras || {});
 
         filters.page = parseInt(filters.page, 10);
