@@ -1,7 +1,7 @@
 {
   "name": "react-admin",
   "description": "React-Admin is a JavaScript library for building admin user interfaces.",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "keywords": [
     "react",
     "admin"
@@ -34,7 +34,9 @@
   "peerDependencies": {
     "react": ">=0.13",
     "react-bootstrap": ">=0.19",
-    "react-router-bootstrap": ">=0.9"
+    "react-router-bootstrap": ">=0.9",
+    "intl": "~0.1",
+    "intl-locales-supported ": "1.0.0"
   },
   "readmeFilename": "README.md",
   "devDependencies": {
@@ -83,9 +85,7 @@
     "gulp-babel": "~4.0",
     "babelify": "~5.0",
     "gulp-uglify": "~1.1",
-    "node-sass": "~3.0.0-pre",
-    "intl": "~0.1",
-    "intl-locales-supported ": "1.0.0"
+    "node-sass": "~3.0.0-pre"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jest-setup.js",
