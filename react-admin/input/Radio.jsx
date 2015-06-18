@@ -12,6 +12,7 @@ var BaseRadio = {
     render () {
         return <Roles.Has roles={this.props.roles}>
             <B.Input
+                {...this.props}
                 name={this.props.name}
                 checked={this.isChecked()}
                 default="Default value ..."

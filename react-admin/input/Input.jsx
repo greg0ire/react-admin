@@ -122,6 +122,7 @@ var Base = {
     render () {
         return <Roles.Has roles={this.props.roles}>
             <B.Input
+                {...this.props}
                 value={this.getValue()}
                 default="Default value ..."
                 type={this.type}

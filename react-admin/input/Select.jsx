@@ -39,6 +39,7 @@ export var BooleanSelect = Input.create(BaseSelect, {
     render () {
         return <Roles.Has roles={this.props.roles}>
             <B.Input
+                {...this.props}
                 value={this.getValue() ? '1' : '0'}
                 type={this.type}
                 label={this.props.label}
