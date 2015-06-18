@@ -39,7 +39,8 @@ var BaseTable = {
             per_page: this.props.per_page,
             next: null,
             previous: null,
-            elements: []
+            elements: [],
+            filters: []
         };
     },
 
@@ -57,6 +58,7 @@ var BaseTable = {
             per_page: 32
         };
 
+        filters = _.assign(filters, 'filters' in this.state ? this.state.filters : {});
         filters = _.assign(filters, this.context.router.getCurrentQuery());
         filters = _.assign(filters, extras || {});
 
