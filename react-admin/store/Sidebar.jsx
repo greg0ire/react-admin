@@ -11,8 +11,6 @@ export var Store = Reflux.createStore({
         this.listenTo(ToggleAction, () => {
             this.show = !this.show;
 
-            console.log("Store", this.show);
-
             this.trigger(this.show);
         });
     }
@@ -28,8 +26,6 @@ export var Component = React.createClass({
 
     componentDidMount() {
         this.listenTo(Store, (show) => {
-            console.log("listenTo", show);
-
             this.setState({
                 show: show
             });
@@ -37,8 +33,6 @@ export var Component = React.createClass({
     },
 
     render () {
-        console.log("render", this.state.show);
-
         var classes = classNames({
             'react-app-sidebar': true,
             'hide': !this.state.show
