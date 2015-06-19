@@ -58,10 +58,12 @@ export default ReactAdmin.createTable({
         this.setState({
             page: filters.page,
             per_page: filters.per_page,
+            filters: filters,
             elements: elements
         });
     },
 
+    // method required by the form
     refreshView() {
         this.setState({
             filters: this.state.filters
@@ -77,7 +79,7 @@ export default ReactAdmin.createTable({
 
             </div>
             <div className="col-sm-4">
-                <B.Button bsStyle="primary" onClick={this.refreshGrid}>Search</B.Button>
+                <B.Button bsStyle="primary" onClick={this.search}>Search</B.Button>
             </div>
         </B.Row>
     },

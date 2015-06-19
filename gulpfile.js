@@ -37,6 +37,11 @@ gulp.task('default', function(cb) {
     return runSequence('lib', 'npm', 'demo', 'doc', cb);
 });
 
+
+gulp.task('js', function(cb) {
+    return runSequence('lib.transpile', 'npm', 'demo.js', cb);
+});
+
 /**
  * Tasks for building the main library
  **/

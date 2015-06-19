@@ -15,14 +15,13 @@ var _ = require('lodash');
 var Url = require('url');
 
 var BaseTable = {
+    mixins: [Router.Navigation, Router.State],
+
     propTypes: {
         index: React.PropTypes.string.isRequired,
         className: React.PropTypes.string,
         per_page: React.PropTypes.number,
         show_filters: React.PropTypes.bool
-    },
-    contextTypes: {
-      router: React.PropTypes.func
     },
 
     getDefaultProps () {
@@ -48,8 +47,34 @@ var BaseTable = {
         this.refreshGrid();
     },
 
+    componentWillReceiveProps() {
+        this.refreshGrid();
+    },
+
     refreshGrid() {
         console.log("You need to implement the refreshGrid method");
+    },
+
+    // update the url with the search criteria
+    search(inc) {
+        var params = {
+            page: 1,
+            per_page: 32
+        };
+
+        var inc = Number.isInteger(inc) ? inc : 0;
+
+        params = _.assign(params, 'filters' in this.state ? this.state.filters : {});
+
+        if (inc === 0) {
+            params.page = 1;
+        } else {
+            params.page = parseInt(params.page, 10) + inc;
+        }
+
+        params.per_page = parseInt(params.per_page, 10);
+
+        this.transitionTo(this.props.index, null, params);
     },
 
     getFilters (extras) {
@@ -59,7 +84,7 @@ var BaseTable = {
         };
 
         filters = _.assign(filters, 'filters' in this.state ? this.state.filters : {});
-        filters = _.assign(filters, this.context.router.getCurrentQuery());
+        filters = _.assign(filters, this.getQuery());
         filters = _.assign(filters, extras || {});
 
         filters.page = parseInt(filters.page, 10);
@@ -122,10 +147,10 @@ var BaseTable = {
 
                 <B.Pager>
                     <li className="previous">
-                        <Router.Link to={this.props.index} query={{page: this.getPage(-1)}} onClick={this.refreshGrid.bind(this, {page: this.getPage(-1)})} >&larr; Previous Page</Router.Link>
+                        <Router.Link to={this.props.index} query={this.getFilters({page: this.getPage(-1)})} onClick={this.search.bind(this, -1)} >&larr; Previous Page</Router.Link>
                     </li>
                     <li className="next">
-                        <Router.Link to={this.props.index} query={{page: this.getPage(1)}} onClick={this.refreshGrid.bind(this, {page: this.getPage(1)})} >Next Page &rarr;</Router.Link>
+                        <Router.Link to={this.props.index} query={this.getFilters({page: this.getPage(1)})} onClick={this.search.bind(this, 1)} >Next Page &rarr;</Router.Link>
                     </li>
                 </B.Pager>
             </div>
