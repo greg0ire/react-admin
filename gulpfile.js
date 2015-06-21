@@ -3,7 +3,6 @@
 var gulp    = require('gulp');
 var del     = require('del');
 var browserify = require('browserify');
-var webserver = require('gulp-webserver');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var babelify = require("babelify");
@@ -11,19 +10,13 @@ var less = require('gulp-less');
 var rename = require('gulp-rename');
 var babel  = require("gulp-babel");
 var plumber = require('gulp-plumber');
-var concat  = require('gulp-concat');
 var replace = require('gulp-regex-replace');
-var stripDebug = require('gulp-strip-debug');
-var sourcemaps = require('gulp-sourcemaps');
-var derequire = require('gulp-derequire');
 var changed = require('gulp-changed');
 var sass = require('gulp-sass');
 var csso = require('gulp-csso');
 var autoprefixer = require('gulp-autoprefixer');
 var notify = require('gulp-notify');
-var debug = require('gulp-debug');
 var watch = require('gulp-watch');
-var sequence = require('gulp-watch-sequence');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var transform = require('vinyl-transform');
@@ -31,10 +24,22 @@ var runSequence = require('run-sequence');
 var styledocco = require('gulp-styledocco');
 var marked = require('gulp-marked');
 var uglify = require('gulp-uglify');
+var bump = require('gulp-bump');
 
 
 gulp.task('default', function(cb) {
     return runSequence('lib', 'npm', 'demo', 'doc', cb);
+});
+
+
+
+/**
+ * Tasks for publishing the package
+ **/
+gulp.task('bump', ['default'], function(){
+  gulp.src('./*.json')
+  .pipe(bump({type:'patch'}))
+  .pipe(gulp.dest('./'));
 });
 
 
@@ -150,6 +155,8 @@ gulp.task('demo.clean', ['demo.clean.js', 'demo.clean.fonts', 'demo.clean.css'],
 });
 
 gulp.task('demo.js', ['demo.clean.js'], function(cb) {
+    process.env.NODE_ENV = 'development';
+
     return browserify("./demo/app.jsx", {
           basedir: __dirname,
           debug: true,
@@ -161,7 +168,7 @@ gulp.task('demo.js', ['demo.clean.js'], function(cb) {
         .on("error", function (err) { console.log("Error: " + err.message); })
         .pipe(source('app.js'))
         .pipe(buffer())
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest("./dist/demo/js"));
 });
 
@@ -172,6 +179,9 @@ gulp.task('demo', [
     'demo.fonts'
 ]);
 
+/**
+ * Tasks for building the documentation
+ **/
 gulp.task('doc.styles.clean', function(cb) {
     return del('./dist/docs/themes/**/*.html', cb);
 });
@@ -207,3 +217,4 @@ gulp.task('watch', function () {
 
     return watcher;
 });
+
