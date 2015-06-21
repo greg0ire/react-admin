@@ -111,12 +111,11 @@ gulp.task('npm', ['npm.prepare'], function () {
 /**
  * Tasks for building the current demo
  **/
-gulp.task('demo.fonts', ['demo.clean.fonts'], function() { 
+gulp.task('demo.fonts', ['demo.clean.fonts'], function() {
     return gulp.src([
         './bower_components/bootstrap-sass/assets/fonts/bootstrap/**.*',
         './bower_components/fontawesome/fonts/**.*'
-    ]) 
-    .pipe(gulp.dest('./dist/demo/fonts')); 
+    ]).pipe(gulp.dest('./dist/demo/fonts'));
 });
 
 gulp.task('demo.styles', ['demo.clean.styles'], function() {
