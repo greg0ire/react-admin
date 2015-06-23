@@ -71,7 +71,7 @@ export default ReactAdmin.createTable({
     },
 
     renderFilters() {
-        return <B.Row>
+        return <B.Row className="filters-container">
             <div className="col-sm-4">
                 <ReactAdmin.TextInput form={this} property="filters.name" addonBefore="Name"/>
             </div>

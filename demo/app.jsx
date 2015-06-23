@@ -73,9 +73,7 @@ var App = React.createClass({
 
                 <div className="container-fluid">
                     <ReactAdmin.Status.Component />
-                    <div className="row">
-                        <Router.RouteHandler />
-                    </div>
+                    <Router.RouteHandler />
                 </div>
             </div>
         );
