@@ -63,16 +63,16 @@ export default React.createClass({
             return;
         }
 
-        Store.saveAction(this.state.object, (obj) => {
-            ReactAdmin.Status.Action('success', "The object has been saved", 2000);
-            ReactAdmin.Notification.Action(NotificationElement, {
-                name: obj.name,
-                action: "Save",
-                id: obj.id
-            });
+        Store.saveAction(this.state.object);
 
-            this.transitionTo("app1.edit", {id: obj.id}, null);
+        ReactAdmin.Status.Action('success', "The object has been saved", 2000);
+        ReactAdmin.Notification.Action(NotificationElement, {
+            name: this.state.object.name,
+            action: "Save",
+            id: this.state.object.id
         });
+
+        this.transitionTo("app1.edit", {id: this.state.object.id}, null);
     },
 
     loadData() {
@@ -88,10 +88,15 @@ export default React.createClass({
     },
 
     render() {
+        if (!this.state.object) {
+            return <ReactAdmin.ResourceNotFound reference={this.getParams().id}  />
+        }
+
         var title = "Create";
         if (this.getParams().id) {
             title = "Edit " + this.state.object.name;
         }
+
         return (
             <div className="col-sm-12 col-md-12 main">
                 <h2 className="sub-header">{{title}}</h2>
