@@ -50,6 +50,8 @@ module.exports = {
     BooleanRadio: RadioInput.BooleanRadio,
     Radio: RadioInput.Radio,
 
+    ResourceNotFound: require("./form/ResourceNotFound.jsx"),
+
     // Table
     createTable: require("./pager/Table.jsx").create,
 

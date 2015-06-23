@@ -3,7 +3,19 @@
 var reflux = require('reflux');
 var faker = require('faker');
 
-export var saveAction = reflux.createAction();
+export function saveAction(obj) {
+    if (!("id" in obj)) {
+        obj.id = objectsStore.objects.size;
+
+        console.log("Save action:", obj.id);
+
+        addToStore(obj);
+    }
+
+    // nothing else to do
+}
+
+export var addToStore = reflux.createAction();
 
 export var objectsStore = reflux.createStore({
     init() {
@@ -22,14 +34,8 @@ export var objectsStore = reflux.createStore({
             });
         }
 
-        this.listenTo(saveAction, (obj, cb) => {
-            if (!("id" in obj)) {
-                obj.id = this.objects.size;
-
-                this.objects.set(obj.id, obj);
-            }
-
-            cb(obj);
+        this.listenTo(addToStore, (obj) => {
+            this.objects.set(obj.id, obj);
 
             this.trigger.apply(this, this.objects)
         });

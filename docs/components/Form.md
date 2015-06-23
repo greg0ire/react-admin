@@ -1,4 +1,4 @@
-From
+Form
 ====
 
 A form is a default ``ReactJS`` component. A form component should defined some default functions. Those functions are not linked to ``react-admin`` but required by ``ReactJS`` it self.
@@ -54,6 +54,10 @@ Like any ReactJS component, the render method is mandatory. The method must retu
 
 ```js
 render() {
+    if (!this.state.object) {
+        return <ReactAdmin.ResourceNotFound reference={this.getParams().id}  />
+    }
+        
     return (
         <div className="col-sm-12 col-md-12 main">
             <h2 className="sub-header">Edit {this.state.object.name} </h2>
