@@ -149,11 +149,11 @@ gulp.task('demo.clean.js', function(cb) {
     return del('./dist/demo/js', cb);
 });
 
-gulp.task('demo.clean', ['demo.clean.js', 'demo.clean.fonts', 'demo.clean.css'], function() {
+gulp.task('demo.clean', ['demo.clean.js', 'demo.clean.fonts', 'demo.clean.css'], function(cb) {
     return del('./dist/demo', cb);
 });
 
-gulp.task('demo.js', ['demo.clean.js'], function(cb) {
+gulp.task('demo.js', ['demo.clean.js'], function() {
     process.env.NODE_ENV = 'development';
 
     return browserify("./demo/app.jsx", {

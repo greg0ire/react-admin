@@ -13,17 +13,18 @@ var Store = require('./Store.jsx');
 var NotificationElement = require('component/NotificationElement.jsx');
 
 export default React.createClass({
-    mixins: [Reflux.ListenerMixin],
-
-    contextTypes: {
-      router: React.PropTypes.func
-    },
+    mixins: [Reflux.ListenerMixin, Router.Navigation, Router.State],
 
     getInitialState() {
         // define default values
         return {
-            object: {
-                name: "loading node ..."
+            object: { // default values
+                name: "123",
+                bio: "",
+                account: 123,
+                superAdmin: false,
+                enabled: false,
+                status: 0
             },
             errors: {}
         };
@@ -34,9 +35,7 @@ export default React.createClass({
     },
 
     refreshView() {
-        this.setState({
-            object: Store.objectsStore.objects.get(parseInt(this.context.router.getCurrentParams().id, 10))
-        });
+        this.loadData();
     },
 
     componentWillReceiveProps() {
@@ -54,36 +53,48 @@ export default React.createClass({
             errors['object.name'] = ["Name cannot be emtpy"];
         }
 
-        if (Object.keys(errors).length > 0) {
-            ReactAdmin.Status.Action('danger', "Errors occurs while saving", 4000);
-        } else {
-            ReactAdmin.Status.Action('success', "The object has been saved", 2000);
-
-            ReactAdmin.Notification.Action(NotificationElement, {
-                name: this.state.object.name,
-                action: "Save",
-                id: this.state.object.id
-            });
-        }
-
         this.setState({
             'errors': errors
         });
 
-        Store.saveAction(this.state.object);
-    },
+        if (Object.keys(errors).length > 0) {
+            ReactAdmin.Status.Action('danger', "Errors occurs while saving", 4000);
 
-    loadData() {
+            return;
+        }
 
-        this.setState({
-            object: Store.objectsStore.objects.get(parseInt(this.context.router.getCurrentParams().id, 10))
+        Store.saveAction(this.state.object, (obj) => {
+            ReactAdmin.Status.Action('success', "The object has been saved", 2000);
+            ReactAdmin.Notification.Action(NotificationElement, {
+                name: obj.name,
+                action: "Save",
+                id: obj.id
+            });
+
+            this.transitionTo("app1.edit", {id: obj.id}, null);
         });
     },
 
+    loadData() {
+        if (this.getParams().id) {
+            this.setState({
+                object: Store.objectsStore.objects.get(parseInt(this.getParams().id, 10))
+            });
+        } else {
+            this.setState({ // not saved for now
+                object: this.state.object
+            });
+        }
+    },
+
     render() {
+        var title = "Create";
+        if (this.getParams().id) {
+            title = "Edit " + this.state.object.name;
+        }
         return (
             <div className="col-sm-12 col-md-12 main">
-                <h2 className="sub-header">Edit {this.state.object.name} </h2>
+                <h2 className="sub-header">{{title}}</h2>
 
                 <div className="well">
                     This is a test form, no data are sent, you can try to clear the name or account fields to
@@ -124,7 +135,6 @@ export default React.createClass({
                 <Router.Link to="app1.list">Return list</Router.Link>
 
                 <B.Button bsStyle="link" onClick={ReactAdmin.Roles.Store.toggleRole.bind(null, "SUPER_ADMIN")}>Toggle role SUPER_ADMIN</B.Button>
-
             </div>
         );
     }

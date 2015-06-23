@@ -4,14 +4,16 @@ var React  = require('react');
 var Router = require('react-router');
 var ReactAdmin = require('react-admin');
 
-var Form = require('./Form.jsx');
-var List = require('./List.jsx');
+var NavWrapper = require('./NavWrapper.jsx');
+
+var Edit = NavWrapper(require('./Form.jsx'), 'edit');
+var Create = NavWrapper(require('./Form.jsx'), 'create');
+var List = NavWrapper(require('./List.jsx'), 'list');
+
 
 var NotificationElement = require('component/NotificationElement.jsx');
 
-
 // adding some fake data
-
 var roles = [
     "EDITOR",
     "VISITOR",
@@ -50,8 +52,9 @@ var View = React.createClass({
 export function getRoutes() {
    return <Router.Route name="app1" handler={View} >
 
-      <Router.Route name="app1.list"  path="list" handler={List} />
-      <Router.Route name="app1.edit"  path="edit/:id" handler={Form} />
+      <Router.Route name="app1.list"   path="list"     handler={List} />
+      <Router.Route name="app1.edit"   path="edit/:id" handler={Edit} />
+      <Router.Route name="app1.create" path="create"   handler={Create} />
 
       <Router.DefaultRoute handler={List} />
    </Router.Route>
