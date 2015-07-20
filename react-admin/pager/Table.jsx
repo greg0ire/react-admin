@@ -59,7 +59,7 @@ var BaseTable = {
     search(inc) {
         var params = {
             page: 1,
-            per_page: 32
+            per_page: this.props.per_page
         };
 
         var inc = Number.isInteger(inc) ? inc : 0;
@@ -80,7 +80,7 @@ var BaseTable = {
     getFilters (extras) {
         var filters = {
             page: 1,
-            per_page: 32
+            per_page: this.props.per_page
         };
 
         filters = _.assign(filters, 'filters' in this.state ? this.state.filters : {});
