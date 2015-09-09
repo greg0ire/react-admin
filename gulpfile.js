@@ -2,7 +2,6 @@
 
 var gulp    = require('gulp');
 var del     = require('del');
-var browserify = require('browserify');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var babelify = require("babelify");
@@ -25,21 +24,20 @@ var styledocco = require('gulp-styledocco');
 var marked = require('gulp-marked');
 var uglify = require('gulp-uglify');
 var bump = require('gulp-bump');
-
+var webpack = require('webpack');
+var gutil = require("gulp-util");
 
 gulp.task('default', function(cb) {
     return runSequence('lib', 'npm', 'demo', 'doc', cb);
 });
 
-
-
 /**
  * Tasks for publishing the package
  **/
 gulp.task('bump', ['default'], function(){
-  gulp.src('./*.json')
-  .pipe(bump({type:'patch'}))
-  .pipe(gulp.dest('./'));
+    gulp.src('./*.json')
+        .pipe(bump({type:'patch'}))
+        .pipe(gulp.dest('./'));
 });
 
 
@@ -153,22 +151,41 @@ gulp.task('demo.clean', ['demo.clean.js', 'demo.clean.fonts', 'demo.clean.css'],
     return del('./dist/demo', cb);
 });
 
-gulp.task('demo.js', ['demo.clean.js'], function() {
+gulp.task('demo.js', ['demo.clean.js'], function(cb) {
     process.env.NODE_ENV = 'development';
 
-    return browserify("./demo/app.jsx", {
-          basedir: __dirname,
-          debug: true,
-          paths: ['./node_modules', './demo'],
-          fullPaths: false
-        })
-        .transform(babelify)
-        .bundle()
-        .on("error", function (err) { console.log("Error: " + err.message); })
-        .pipe(source('app.js'))
-        .pipe(buffer())
-        //.pipe(uglify())
-        .pipe(gulp.dest("./dist/demo/js"));
+    webpack({
+        entry: "./demo/app.jsx",
+        resolve: {
+            fallback: [ __dirname + "/demo"]
+        },
+        output: {
+            path: __dirname,
+            filename: "dist/demo/js/app.js",
+            sourceMapFilename: '[file].map'
+        },
+        module: {
+            loaders: [{
+                test: /\.jsx?$/,
+                exclude: /(node_modules|bower_components)/,
+                loaders: ["babel-loader"]
+            }]
+        },
+        plugins: [
+            new webpack.optimize.UglifyJsPlugin({minimize: true})
+//            , new webpack.optimize.CommonsChunkPlugin('common.min.js')
+        ]
+    }, function(err, stats) {
+        if(err) {
+            throw new gutil.PluginError("webpack", err);
+        }
+
+        gutil.log("[webpack]", stats.toString({
+            // output options
+        }));
+
+        cb();
+    });
 });
 
 gulp.task('demo', [
@@ -207,13 +224,4 @@ gulp.task('doc.html', ['doc.html.clean'], function() {
 });
 
 gulp.task('doc', ['doc.html', 'doc.styles']);
-
-gulp.task('watch', function () {
-    var watcher = gulp.watch("./react-admin/*/*.jsx", ['default']);
-    watcher.on('change', function(event) {
-        console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-    });
-
-    return watcher;
-});
 

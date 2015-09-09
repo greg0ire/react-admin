@@ -14,6 +14,9 @@ The project comes with a set of widget with auto-mapping to the related data str
 </ReactAdmin.BooleanSelect>
 ```
 
+The property field defined the value of the input and ``object`` must be defined in the ``state`` variables.
+
+
 Text
 ----
 
