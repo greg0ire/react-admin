@@ -1,0 +1,15 @@
+div.react-app-notifications h1 {
+  margin-top: 0px;
+  color: #FFFFFF;
+  font-size: 22px;
+  margin-bottom: 13px;
+  text-align: center; }
+
+div.react-app-notifications__element {
+  color: #E0E0E0;
+  clear: both;
+  margin-bottom: 10px; }
+  div.react-app-notifications__element__title {
+    font-weight: bold; }
+  div.react-app-notifications__element a {
+    color: #9C9C9C; }

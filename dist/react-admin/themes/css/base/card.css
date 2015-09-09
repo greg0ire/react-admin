@@ -1,0 +1,76 @@
+/*
+  A card represent an element in a list
+ */
+.card {
+  background-color: #F9F9F9;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #d2d6de;
+  border-left: 5px solid #d2d6de;
+  padding: 5px;
+  min-height: 70px;
+  max-height: 70px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  /**
+     *    A visual representation of the element
+     */ }
+  .card:hover {
+    background-color: #E6E9ED; }
+  .card__icon {
+    margin-top: -6px;
+    min-height: 70px;
+    max-height: 70px;
+    float: left;
+    margin-right: 5px; }
+  .card__notification {
+    float: right !important;
+    position: absolute;
+    top: 7px;
+    right: 24px; }
+  .card__information {
+    position: absolute;
+    bottom: 5px;
+    right: 23px;
+    font-size: 10px;
+    font-style: italic; }
+  .card__actions {
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    right: 15px;
+    background: #d2d6de;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px 0px 0px 0px;
+    color: #333333; }
+  @media (min-width: 992px) {
+    .card {
+      margin-bottom: 5px;
+      margin-top: 5px; }
+    .card__actions {
+      bottom: 5px; } }
+  .card__actions a {
+    color: #000000; }
+  .card:hover .card__actions {
+    display: block; }
+  .card__actions {
+    display: none; }
+  .card:hover .card__content {
+    display: none; }
+  .card__content {
+    display: block; }
+  .card__title {
+    font-weight: bold; }
+
+.card-user {
+  background-color: #e5dbcc; }
+
+.card-media {
+  background-color: #ffffff; }
+
+.card-post {
+  background-color: #5e68c4; }

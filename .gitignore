@@ -3,4 +3,5 @@ bower_components
 .idea
 .DS_Store
 .sass-cache
-dist
+dist/docs
+dist/demo

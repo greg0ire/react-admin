@@ -4,8 +4,6 @@ var gulp    = require('gulp');
 var del     = require('del');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
-var babelify = require("babelify");
-var less = require('gulp-less');
 var rename = require('gulp-rename');
 var babel  = require("gulp-babel");
 var plumber = require('gulp-plumber');
@@ -15,14 +13,9 @@ var sass = require('gulp-sass');
 var csso = require('gulp-csso');
 var autoprefixer = require('gulp-autoprefixer');
 var notify = require('gulp-notify');
-var watch = require('gulp-watch');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var transform = require('vinyl-transform');
 var runSequence = require('run-sequence');
 var styledocco = require('gulp-styledocco');
 var marked = require('gulp-marked');
-var uglify = require('gulp-uglify');
 var bump = require('gulp-bump');
 var webpack = require('webpack');
 var gutil = require("gulp-util");
@@ -203,6 +196,8 @@ gulp.task('doc.styles.clean', function(cb) {
 });
 
 gulp.task('doc.styles', ['lib.theme'], function () {
+    return
+
     return gulp.src('./dist/react-admin/themes/css/**/*.css')
         .pipe(styledocco({
             out: './dist/docs/themes',
